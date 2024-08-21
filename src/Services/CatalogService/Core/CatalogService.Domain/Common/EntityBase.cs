@@ -1,6 +1,7 @@
-﻿namespace CatalogService.Domain.Common
+﻿
+namespace CatalogService.Domain.Common
 {
-    public interface IEntityBase
+    public class EntityBase : IEntityBase
     {
         public int Id { get; set; }
         public string CreatedBy { get; set; }
