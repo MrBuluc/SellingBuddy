@@ -96,9 +96,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus.UnitTest", "tests\
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{3FFDC300-0D34-4759-AD89-4660E49F42B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Application", "src\Services\CatalogService\Core\CatalogService.Application\CatalogService.Application.csproj", "{7099C437-DC21-4277-9966-C7F6A14B2A90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Application", "src\Services\CatalogService\Core\CatalogService.Application\CatalogService.Application.csproj", "{7099C437-DC21-4277-9966-C7F6A14B2A90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Domain", "src\Services\CatalogService\Core\CatalogService.Domain\CatalogService.Domain.csproj", "{54143D18-38BA-4D5C-8600-FE9035208C96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CatalogService.Domain", "src\Services\CatalogService\Core\CatalogService.Domain\CatalogService.Domain.csproj", "{54143D18-38BA-4D5C-8600-FE9035208C96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CatalogService.Mapper", "src\Services\CatalogService\Core\CatalogService.Mapper\CatalogService.Mapper.csproj", "{629B26A2-E4F9-4E27-8B09-2AD5B609D5EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -186,6 +188,10 @@ Global
 		{54143D18-38BA-4D5C-8600-FE9035208C96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54143D18-38BA-4D5C-8600-FE9035208C96}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{54143D18-38BA-4D5C-8600-FE9035208C96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{629B26A2-E4F9-4E27-8B09-2AD5B609D5EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{629B26A2-E4F9-4E27-8B09-2AD5B609D5EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{629B26A2-E4F9-4E27-8B09-2AD5B609D5EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{629B26A2-E4F9-4E27-8B09-2AD5B609D5EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -235,6 +241,7 @@ Global
 		{3FFDC300-0D34-4759-AD89-4660E49F42B8} = {188FA6B6-FCE4-43F1-AB29-855991108E60}
 		{7099C437-DC21-4277-9966-C7F6A14B2A90} = {3FFDC300-0D34-4759-AD89-4660E49F42B8}
 		{54143D18-38BA-4D5C-8600-FE9035208C96} = {3FFDC300-0D34-4759-AD89-4660E49F42B8}
+		{629B26A2-E4F9-4E27-8B09-2AD5B609D5EB} = {3FFDC300-0D34-4759-AD89-4660E49F42B8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D287010-E22E-4F21-BF78-5D66B084A937}
