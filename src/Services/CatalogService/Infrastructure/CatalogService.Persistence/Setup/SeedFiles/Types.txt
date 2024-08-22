@@ -1,0 +1,16 @@
+﻿Type
+Bag
+Computer
+Modem
+Monitor
+Tablet
+Smart watch
+Headphones
+Gaming Console
+Wallet
+Watch
+Sunglasses
+Refrigerator
+Washing Machine
+Microwave Oven
+Air Conditioner
