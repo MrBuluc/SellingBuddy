@@ -29,6 +29,7 @@ namespace CatalogService.Api
                 .Build();
         }
 
+        [Obsolete]
         public static IWebHost BuildWebHost(IConfiguration configuration) => WebHost.CreateDefaultBuilder()
             .UseDefaultServiceProvider((context, options) =>
             {
@@ -43,6 +44,7 @@ namespace CatalogService.Api
             .UseSerilog()
             .Build();
 
+        [Obsolete]
         private static void Main(string[] args)
         {
             IWebHost host = BuildWebHost(Configuration);
