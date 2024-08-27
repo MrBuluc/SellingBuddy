@@ -10,12 +10,15 @@ namespace CatalogService.Persistence.Contexts
 {
     public class CatalogContextSeed
     {
-        public async Task SeedAsync(CatalogServiceDbContext context, IWebHostEnvironment environment, ILogger<CatalogContextSeed> logger)
+        public async Task SeedAsync(CatalogServiceDbContext context, IWebHostEnvironment? environment, ILogger<CatalogContextSeed>? logger)
         {
-            await Policy.Handle<SqlException>().WaitAndRetryAsync(retryCount: 3, sleepDurationProvider: retry => TimeSpan.FromSeconds(5), onRetry: (exception, timeSpan, retry, ctx) =>
+            if (environment is not null && logger is not null)
             {
-                logger.LogWarning(exception, "[{prefix}] Exception {ExceptionType} with message {Message} detected on attempt {retry} of {retries}", nameof(logger), exception.GetType().Name, exception.Message, retry, 3);
-            }).ExecuteAsync(() => ProcessSeeding(context, Path.Combine(environment.ContentRootPath, "Infrastructure", "CatalogService.Persistence", "Setup", "SeedFiles"), "Pics", logger));
+                await Policy.Handle<SqlException>().WaitAndRetryAsync(retryCount: 3, sleepDurationProvider: retry => TimeSpan.FromSeconds(5), onRetry: (exception, timeSpan, retry, ctx) =>
+                {
+                    logger.LogWarning(exception, "[{prefix}] Exception {ExceptionType} with message {Message} detected on attempt {retry} of {retries}", nameof(logger), exception.GetType().Name, exception.Message, retry, 3);
+                }).ExecuteAsync(() => ProcessSeeding(context, Path.Combine(environment.ContentRootPath, "Infrastructure", "CatalogService.Persistence", "Setup", "SeedFiles"), "Pics", logger));
+            }
         }
 
         private async Task ProcessSeeding(CatalogServiceDbContext context, string setupDirPath, string picturePath, ILogger logger)
