@@ -9,12 +9,12 @@ namespace CatalogService.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Item> builder)
         {
-            builder.ToTable("Catalog", CatalogServiceDbContext.DEFAULT_SCHEMA);
+            builder.ToTable("Item", CatalogServiceDbContext.DEFAULT_SCHEMA);
 
-            builder.Property(i => i.Id).UseHiLo("catalog_hilo").IsRequired();
+            builder.Property(i => i.Id).UseHiLo("item_hilo").IsRequired();
 
-            builder.Property(i => i.Name).IsRequired().HasMaxLength(50);
-            builder.Property(i => i.Price).IsRequired(true);
+            builder.Property(i => i.Name).IsRequired().HasMaxLength(256);
+            builder.Property(i => i.Price).IsRequired(true).HasColumnType("decimal(10, 2)");
             builder.Property(i => i.PictureFileName).IsRequired(false);
             builder.Ignore(i => i.PictureUri);
 

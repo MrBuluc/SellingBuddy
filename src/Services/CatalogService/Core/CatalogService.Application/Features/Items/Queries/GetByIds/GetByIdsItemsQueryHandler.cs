@@ -23,7 +23,7 @@ namespace CatalogService.Application.Features.Items.Queries.GetByIds
                 return new List<GetByIdsItemsQueryResponse>();
             }
 
-            return mapper.Map<IList<GetByIdsItemsQueryResponse>, IList<Item>>(pictureService.ChangeUriPlaceholder(await unitOfWork.GetReadRepository<Item>().GetAllAsync(cancellationToken, predicate: x => numIds.Select(nid => nid.Value).Contains(x.Id))));
+            return mapper.Map<GetByIdsItemsQueryResponse, Item>(pictureService.ChangeUriPlaceholder(await unitOfWork.GetReadRepository<Item>().GetAllAsync(cancellationToken, predicate: i => numIds.Select(nid => nid.Value).Contains(i.Id) && i.DeletedBy == null)));
         }
     }
 }

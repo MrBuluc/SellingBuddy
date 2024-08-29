@@ -1,5 +1,4 @@
-﻿Type
-Bag
+﻿Bag
 Computer
 Modem
 Monitor

@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Data.SqlClient;
+﻿using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Polly;
+using Polly.Retry;
 
 namespace CatalogService.Persistence.Extensions
 {
     public static class HostExtension
     {
-        public static IWebHost MigrateDbContext<TContext>(this IWebHost host, Action<TContext, IServiceProvider> seeder) where TContext : DbContext
+        public static IHost MigrateDbContext<TContext>(this IHost host, Action<TContext, IServiceProvider> seeder) where TContext : DbContext
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -21,14 +22,14 @@ namespace CatalogService.Persistence.Extensions
                 {
                     logger.LogInformation("Migrating db associated with context {DbContextName}", typeof(TContext).Name);
 
-                    Policy.Handle<SqlException>()
+                   RetryPolicy retry = Policy.Handle<SqlException>()
                         .WaitAndRetry(new TimeSpan[]
                         {
                             TimeSpan.FromSeconds(3),
                             TimeSpan.FromSeconds(5),
                             TimeSpan.FromSeconds(8),
-                        })
-                        .Execute(() => InvokeSeeder<TContext>(seeder, services.GetService<TContext>(), services));
+                        });
+                    retry.Execute(() => InvokeSeeder(seeder, services.GetService<TContext>(), services));
 
                     logger.LogInformation("Migrated db associated with context {DbContextName}", typeof(TContext).Name);
                 }

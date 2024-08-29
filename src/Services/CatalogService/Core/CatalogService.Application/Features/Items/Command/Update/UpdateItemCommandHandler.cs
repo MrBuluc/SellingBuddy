@@ -13,7 +13,10 @@ namespace CatalogService.Application.Features.Items.Command.Update
         {
             Item item = await unitOfWork.GetReadRepository<Item>().GetAsync(i => i.Id == request.Id, cancellationToken) ?? throw new ItemNotFoundException(request.Id);
 
-            await unitOfWork.GetWriteRepository<Item>().UpdateAsync(mapper.Map<Item, UpdateItemCommandRequest>(request));
+
+            Item updatedItem = mapper.Map<Item, UpdateItemCommandRequest>(request);
+            updatedItem.CreatedBy = item.CreatedBy;
+            await unitOfWork.GetWriteRepository<Item>().UpdateAsync(updatedItem);
             await unitOfWork.SaveAsync(cancellationToken);
 
             return Unit.Value;

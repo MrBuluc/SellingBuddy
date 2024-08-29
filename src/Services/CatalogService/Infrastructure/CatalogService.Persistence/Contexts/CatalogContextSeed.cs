@@ -17,33 +17,36 @@ namespace CatalogService.Persistence.Contexts
                 await Policy.Handle<SqlException>().WaitAndRetryAsync(retryCount: 3, sleepDurationProvider: retry => TimeSpan.FromSeconds(5), onRetry: (exception, timeSpan, retry, ctx) =>
                 {
                     logger.LogWarning(exception, "[{prefix}] Exception {ExceptionType} with message {Message} detected on attempt {retry} of {retries}", nameof(logger), exception.GetType().Name, exception.Message, retry, 3);
-                }).ExecuteAsync(() => ProcessSeeding(context, Path.Combine(environment.ContentRootPath, "Infrastructure", "CatalogService.Persistence", "Setup", "SeedFiles"), "Pics", logger));
+                }).ExecuteAsync(() => ProcessSeeding(context, Path.Combine(Directory.GetParent(environment.ContentRootPath)!.Parent!.FullName, "Infrastructure", "CatalogService.Persistence", "Setup", "SeedFiles"), "Pics"));
             }
         }
 
-        private async Task ProcessSeeding(CatalogServiceDbContext context, string setupDirPath, string picturePath, ILogger logger)
+        private async Task ProcessSeeding(CatalogServiceDbContext context, string setupDirPath, string picturePath)
         {
+            string createdBy = "CatalogService.Api";
+
             if (!context.Brands.Any())
             {
-                await context.Brands.AddRangeAsync(GetBrandsFromFile(setupDirPath));
+                await context.Brands.AddRangeAsync(GetBrandsFromFile(setupDirPath, createdBy));
+                await context.SaveChangesAsync(CancellationToken.None);
             }
 
             if (!context.Types.Any())
             {
-                await context.Types.AddRangeAsync(GetTypesFromFile(setupDirPath));
+                await context.Types.AddRangeAsync(GetTypesFromFile(setupDirPath, createdBy));
+                await context.SaveChangesAsync(CancellationToken.None);
             }
 
             if (!context.Items.Any())
             {
-                await context.Items.AddRangeAsync(GetItemsFromFile(setupDirPath, context));
+                await context.Items.AddRangeAsync(GetItemsFromFile(setupDirPath, context, createdBy));
+                await context.SaveChangesAsync(CancellationToken.None);
 
                 GetItemPictures(setupDirPath, picturePath);
             }
-
-            await context.SaveChangesAsync(CancellationToken.None);
         }
 
-        private IEnumerable<Brand> GetBrandsFromFile(string contentPath)
+        private static IEnumerable<Brand> GetBrandsFromFile(string contentPath, string createdBy)
         {
             static IEnumerable<Brand> GetPreconfiguredBrands() => new List<Brand>()
             {
@@ -71,13 +74,19 @@ namespace CatalogService.Persistence.Contexts
                 return GetPreconfiguredBrands();
             }
 
-            return File.ReadAllLines(fileName).Select(b => new Brand()
-            {
-                Name = b.Trim('"').Trim(),
-            }).Where(b => b is not null) ?? GetPreconfiguredBrands();
+            int id = 1;
+            return File.ReadAllLines(fileName)
+                .Select(b => new Brand
+                {
+                    Id = id++,
+                    Name = b.Trim('"').Trim(),
+                    CreatedBy = createdBy,
+                    CreatedDate = DateTime.Now,
+                })
+                .Where(b => b is not null) ?? GetPreconfiguredBrands();
         }
 
-        private IEnumerable<Domain.Entities.Type> GetTypesFromFile(string contentPath)
+        private static IEnumerable<Domain.Entities.Type> GetTypesFromFile(string contentPath, string createdBy)
         {
             static IEnumerable<Domain.Entities.Type> GetPreconfiguredTypes() => new List<Domain.Entities.Type>()
             {
@@ -104,13 +113,19 @@ namespace CatalogService.Persistence.Contexts
                 return GetPreconfiguredTypes();
             }
 
-            return File.ReadAllLines(fileName).Select(t => new Domain.Entities.Type()
-            {
-                Name = t.Trim('"').Trim(),
-            }).Where(t => t is not null) ?? GetPreconfiguredTypes();
+            int id = 1;
+            return File.ReadAllLines(fileName)
+                .Select(t => new Domain.Entities.Type
+                {
+                    Id = id++,
+                    Name = t.Trim('"').Trim(),
+                    CreatedBy = createdBy,
+                    CreatedDate = DateTime.Now,
+                })
+                .Where(t => t is not null) ?? GetPreconfiguredTypes();
         }
 
-        private IEnumerable<Item> GetItemsFromFile(string contentPath, CatalogServiceDbContext context)
+        private static IEnumerable<Item> GetItemsFromFile(string contentPath, CatalogServiceDbContext context, string createdBy)
         {
             static IEnumerable<Item> GetPreconfiguredItems() => new List<Item>()
             {
@@ -137,24 +152,28 @@ namespace CatalogService.Persistence.Contexts
 
             Dictionary<string, int> typeIdLookup = context.Types.ToDictionary(t => t.Name, t => t.Id);
             Dictionary<string, int> brandIdLookup = context.Brands.ToDictionary(b => b.Name, b => b.Id);
+            int id = 1;
 
             return File.ReadAllLines(fileName)
-                .Skip(1) // skip header row
-                .Select(i => i.Split(";"))
-                .Select(i => new Item()
-                {
-                    TypeId = typeIdLookup[i[0].Trim()],
-                    BrandId = brandIdLookup[i[1].Trim()],
-                    Description = i[2].Trim('"').Trim(),
-                    Name = i[3].Trim('"').Trim(),
-                    Price = Decimal.Parse(i[4].Trim('"').Trim(), System.Globalization.NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture),
-                    PictureFileName = i[5].Trim('"').Trim(),
-                    AvailableStock = string.IsNullOrEmpty(i[6].Trim()) ? 0 : int.Parse(i[6].Trim()),
-                    OnReorder = Convert.ToBoolean(i[7].Trim()),
-                });
+                            .Skip(1) // skip header row
+                            .Select(i => i.Split(";"))
+                            .Select(i => new Item()
+                            {
+                                Id = id++,
+                                TypeId = typeIdLookup[i[0].Trim()],
+                                BrandId = brandIdLookup[i[1].Trim()],
+                                Description = i[2].Trim('"').Trim(),
+                                Name = i[3].Trim('"').Trim(),
+                                Price = decimal.Parse(i[4].Trim('"').Trim(), System.Globalization.NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture),
+                                PictureFileName = i[5].Trim('"').Trim(),
+                                AvailableStock = string.IsNullOrEmpty(i[6].Trim()) ? 0 : int.Parse(i[6].Trim()),
+                                OnReorder = Convert.ToBoolean(i[7].Trim()),
+                                CreatedBy = createdBy,
+                                CreatedDate = DateTime.Now
+                            });
         }
 
-        private static void GetItemPictures(string contentPath, string? picturePath = "pics")
+        private static void GetItemPictures(string contentPath, string? picturePath = "Pics")
         {
             foreach (FileInfo file in new DirectoryInfo(picturePath!).GetFiles())
             {

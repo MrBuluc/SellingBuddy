@@ -12,11 +12,9 @@ using CatalogService.Application.Features.Items.Queries.GetByTypeIdAndBrandId;
 using CatalogService.Application.Features.Items.Queries.GetWithName;
 using CatalogService.Application.Features.Types.Queries.GetAll;
 using CatalogService.Application.Interfaces.AutoMapper;
-using CatalogService.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
-using System.Security.Claims;
 
 namespace CatalogService.Api.Controllers
 {
@@ -33,7 +31,7 @@ namespace CatalogService.Api.Controllers
         [ProducesResponseType(typeof(PaginatedItems<ItemDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType(typeof(IEnumerable<ItemDTO>), (int)HttpStatusCode.OK)]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
-        public async Task<IActionResult> ItemsAsync([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0, string? ids = null)
+        public async Task<IActionResult> ItemsAsync([FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 1, string? ids = null)
         {
             if (!string.IsNullOrEmpty(ids))
             {
@@ -72,7 +70,7 @@ namespace CatalogService.Api.Controllers
         [HttpGet]
         [Route("items/withname/{name:minlength(1)}")]
         [ProducesResponseType(typeof(PaginatedItems<ItemDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<PaginatedItems<ItemDTO>>> ItemsWithNameAsync(string name, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0)
+        public async Task<ActionResult<PaginatedItems<ItemDTO>>> ItemsWithNameAsync(string name, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 1)
         {
             GetWithNameItemQueryResponse response = await mediator.Send(new GetWithNameItemQueryRequest
             {
@@ -86,9 +84,9 @@ namespace CatalogService.Api.Controllers
 
         // GET api/v1/[controller]/items/type/1/brand[?pageSize=3&pageIndex=10]
         [HttpGet]
-        [Route("items/type/{typeId}/brand/{brandId:int?}")]
+        [Route("items/type/{typeId}/brand/{brandId:int}")]
         [ProducesResponseType(typeof(PaginatedItems<ItemDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<PaginatedItems<ItemDTO>>> ItemsByTypeIdAndBrandIdAsync(int typeId, int? brandId, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0)
+        public async Task<ActionResult<PaginatedItems<ItemDTO>>> ItemsByTypeIdAndBrandIdAsync(int typeId, int brandId = 0, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 1)
         {
             GetByTypeIdAndBrandIdItemQueryResponse response = await mediator.Send(new GetByTypeIdAndBrandIdItemQueryRequest
             {
@@ -102,9 +100,9 @@ namespace CatalogService.Api.Controllers
 
         // GET api/v1/[controller]/items/type/all/brand[?pageSize=3&pageIndex=10]
         [HttpGet]
-        [Route("items/type/all/brand/{brandId:int?}")]
+        [Route("items/type/all/brand/{brandId:int}")]
         [ProducesResponseType(typeof(PaginatedItems<ItemDTO>), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<PaginatedItems<ItemDTO>>> ItemsByBrandIdAsync(int? brandId, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 0)
+        public async Task<ActionResult<PaginatedItems<ItemDTO>>> ItemsByBrandIdAsync(int brandId = 0, [FromQuery] int pageSize = 10, [FromQuery] int pageIndex = 1)
         {
             GetByBrandIdItemsQueryResponse response = await mediator.Send(new GetByBrandIdItemsQueryRequest
             {
@@ -134,11 +132,9 @@ namespace CatalogService.Api.Controllers
         [ProducesResponseType((int)HttpStatusCode.Created)]
         public async Task<ActionResult> UpdateItemAsync([FromBody] ItemDTO itemToUpdate)
         {
-            UpdateItemCommandRequest request = mapper.Map<UpdateItemCommandRequest, ItemDTO>(itemToUpdate);
-            request.UpdatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
-            await mediator.Send(request);
+            await mediator.Send(mapper.Map<UpdateItemCommandRequest, ItemDTO>(itemToUpdate));
 
-            return CreatedAtAction(nameof(ItemByIdAsync), new { id = itemToUpdate.Id }, null);
+            return CreatedAtAction(null, null);
         }
 
         //POST api/v1/[controller]/items
@@ -147,25 +143,22 @@ namespace CatalogService.Api.Controllers
         [ProducesResponseType((int) HttpStatusCode.Created)]
         public async Task<ActionResult> CreateItemAsync([FromBody] ItemDTO item)
         {
-            CreateItemCommandRequest request = mapper.Map<CreateItemCommandRequest, ItemDTO>(item);
-            request.CreatedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value;
+            await mediator.Send(mapper.Map<CreateItemCommandRequest, ItemDTO>(item));
 
-            await mediator.Send(request);
-
-            return CreatedAtAction(nameof(ItemByIdAsync), new {id = item.Id}, null);
+            return CreatedAtAction(null, null);
         }
 
         //DELETE api/v1/[controller]/id
-        [Route("{id}")]
+        [Route("{id}/{deletedBy}")]
         [HttpDelete]
         [ProducesResponseType((int)HttpStatusCode.NoContent)]
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        public async Task<ActionResult> DeleteItemAsync(int id)
+        public async Task<ActionResult> DeleteItemAsync(int id, string deletedBy)
         {
             await mediator.Send(new DeleteItemCommandRequest
             {
                 Id = id,
-                DeletedBy = User.FindFirst(ClaimTypes.NameIdentifier)!.Value
+                DeletedBy = deletedBy
             });
 
             return NoContent();

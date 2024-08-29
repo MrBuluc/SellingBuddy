@@ -19,8 +19,8 @@ namespace CatalogService.Application.Features.Items.Queries.GetWithName
 
             return new()
             {
-                Count = await readRepository.CountAsync(cancellationToken, predicate: i => i.Name.StartsWith(request.Name)),
-                Items = mapper.Map<IList<ItemDTO>, IList<Item>>(pictureService.ChangeUriPlaceholder(await readRepository.GetAllAsyncByPaging(cancellationToken, predicate: i => i.Name.StartsWith(request.Name), currentPage: request.PageIndex, pageSize: request.PageSize)))
+                Count = await readRepository.CountAsync(cancellationToken, predicate: i => i.Name.StartsWith(request.Name) && i.DeletedBy == null),
+                Items = mapper.Map<ItemDTO, Item>(pictureService.ChangeUriPlaceholder(await readRepository.GetAllAsyncByPaging(cancellationToken, predicate: i => i.Name.StartsWith(request.Name), currentPage: request.PageIndex, pageSize: request.PageSize)))
             };
         }
     }

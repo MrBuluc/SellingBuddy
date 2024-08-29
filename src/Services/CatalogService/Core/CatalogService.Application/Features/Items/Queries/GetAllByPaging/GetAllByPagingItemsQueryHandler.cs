@@ -19,7 +19,7 @@ namespace CatalogService.Application.Features.Items.Queries.GetAllByPaging
             return new()
             {
                 Count = await readRepository.CountAsync(cancellationToken),
-                Items = mapper.Map<IList<ItemDTO>, IList<Item>>(pictureService.ChangeUriPlaceholder(await readRepository.GetAllAsyncByPaging(cancellationToken, orderBy: queryable => queryable.OrderBy(i => i.Name), currentPage: request.PageIndex, pageSize: request.PageSize)))
+                Items = mapper.Map<ItemDTO, Item>(pictureService.ChangeUriPlaceholder(await readRepository.GetAllAsyncByPaging(cancellationToken, orderBy: queryable => queryable.OrderBy(i => i.Name), currentPage: request.PageIndex, pageSize: request.PageSize, predicate: i => i.DeletedBy == null)))
             };
         }
     }

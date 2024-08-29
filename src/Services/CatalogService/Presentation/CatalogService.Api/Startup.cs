@@ -4,6 +4,7 @@ using CatalogService.Infrastructure;
 using CatalogService.Mapper;
 using CatalogService.Persistence;
 using Microsoft.Extensions.FileProviders;
+using System.Reflection;
 
 namespace CatalogService.Api
 {
@@ -48,7 +49,7 @@ namespace CatalogService.Api
                 });
             });
 
-            services.AddPersistence(Configuration);
+            services.AddPersistence(Configuration, typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
             services.AddApplication(Configuration);
             services.AddCustomMapper();
             services.AddInfrastructure(Configuration);

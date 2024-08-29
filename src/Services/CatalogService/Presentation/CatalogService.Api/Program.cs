@@ -1,6 +1,5 @@
 using CatalogService.Persistence.Contexts;
 using CatalogService.Persistence.Extensions;
-using Microsoft.AspNetCore;
 using Serilog;
 
 namespace CatalogService.Api
@@ -29,25 +28,30 @@ namespace CatalogService.Api
                 .Build();
         }
 
-        [Obsolete]
-        public static IWebHost BuildWebHost(IConfiguration configuration) => WebHost.CreateDefaultBuilder()
+        public static IHost BuildWebHost(IConfiguration configuration) => Host.CreateDefaultBuilder()
             .UseDefaultServiceProvider((context, options) =>
             {
                 options.ValidateOnBuild = false;
                 options.ValidateScopes = false;
             })
             .ConfigureAppConfiguration(i => i.AddConfiguration(configuration))
-            .UseWebRoot("Pics")
-            .UseContentRoot(Directory.GetCurrentDirectory())
-            .UseStartup<Startup>()
-            .ConfigureLogging(i => i.ClearProviders())
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseWebRoot("Pics");
+                webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
+                webBuilder.UseStartup<Startup>();
+                webBuilder.ConfigureLogging(i => i.ClearProviders());
+            })
             .UseSerilog()
             .Build();
 
-        [Obsolete]
         private static void Main(string[] args)
         {
-            IWebHost host = BuildWebHost(Configuration);
+            IHost host = BuildWebHost(Configuration);
+
+            Log.Logger = new LoggerConfiguration()
+               .ReadFrom.Configuration(SerilogConfiguration)
+               .CreateLogger();
 
             host.MigrateDbContext<CatalogServiceDbContext>((context, services) =>
             {
@@ -56,9 +60,6 @@ namespace CatalogService.Api
                 .Wait();
             });
 
-            Log.Logger = new LoggerConfiguration()
-                .ReadFrom.Configuration(SerilogConfiguration)
-                .CreateLogger();
             Log.Logger.Information("Catalog Service Application is Running...");
 
             host.Run();

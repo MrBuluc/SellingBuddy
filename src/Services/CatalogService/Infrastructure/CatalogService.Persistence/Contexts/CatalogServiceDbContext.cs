@@ -1,8 +1,8 @@
 ﻿using CatalogService.Domain.Common;
 using CatalogService.Domain.Entities;
+using CatalogService.Persistence.Configurations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.Reflection;
 
 namespace CatalogService.Persistence.Contexts
 {
@@ -19,9 +19,9 @@ namespace CatalogService.Persistence.Contexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
-
-            modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            modelBuilder.ApplyConfiguration(new BrandConfiguration());
+            modelBuilder.ApplyConfiguration(new ItemConfiguration());
+            modelBuilder.ApplyConfiguration(new TypeConfiguration());
         }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken)

@@ -12,7 +12,7 @@ namespace CatalogService.Persistence.Configurations
 
             builder.HasKey(t => t.Id);
 
-            builder.Property(t => t.Id).UseHiLo("catalog_type_hilo").IsRequired();
+            builder.Property(t => t.Id).UseHiLo("type_hilo").IsRequired();
             builder.Property(t => t.Name).IsRequired().HasMaxLength(100);
 
             // Common Fields

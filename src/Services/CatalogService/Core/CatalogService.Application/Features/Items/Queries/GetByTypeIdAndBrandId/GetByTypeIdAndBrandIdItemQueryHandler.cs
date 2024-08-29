@@ -16,24 +16,22 @@ namespace CatalogService.Application.Features.Items.Queries.GetByTypeIdAndBrandI
         public async Task<GetByTypeIdAndBrandIdItemQueryResponse> Handle(GetByTypeIdAndBrandIdItemQueryRequest request, CancellationToken cancellationToken)
         {
             IReadRepository<Item> readRepository = unitOfWork.GetReadRepository<Item>();
+            IList<Item> items;
+
+            if (request.BrandId is not 0)
+            {
+                items = await readRepository.GetAllAsyncByPaging(cancellationToken, predicate: i => i.TypeId == request.TypeId && i.BrandId == request.BrandId && i.DeletedBy == null, currentPage: request.PageIndex, pageSize: request.PageSize);
+            }
+            else
+            {
+                items = await readRepository.GetAllAsyncByPaging(cancellationToken, predicate: i => i.TypeId == request.TypeId && i.DeletedBy == null, currentPage: request.PageIndex, pageSize: request.PageSize);
+            }
 
             return new()
             {
-                Count = await readRepository.CountAsync(cancellationToken, predicate: i => Predicate(i, request)),
-                Items = mapper.Map<IList<ItemDTO>, IList<Item>>(pictureService.ChangeUriPlaceholder(await readRepository.GetAllAsyncByPaging(cancellationToken, predicate: i => Predicate(i, request), currentPage: request.PageIndex, pageSize: request.PageSize)))
+                Count = items.Count,
+                Items = mapper.Map<ItemDTO, Item>(pictureService.ChangeUriPlaceholder(items))
             };
-        }
-
-        private static bool Predicate(Item item, GetByTypeIdAndBrandIdItemQueryRequest request)
-        {
-            bool predicate = item.TypeId == request.TypeId;
-
-            if (request.BrandId.HasValue)
-            {
-                predicate = predicate && item.BrandId == request.BrandId;
-            }
-
-            return predicate;
         }
     }
 }

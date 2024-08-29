@@ -1,5 +1,4 @@
-﻿Brand
-Acer
+﻿Acer
 TP-Link
 Monster
 Vestel
@@ -8,7 +7,7 @@ Google
 Sony
 Gucci
 Zara
-Nestlé
+Nestle
 Starbucks
 LG
 Panasonic

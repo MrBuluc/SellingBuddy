@@ -13,9 +13,10 @@ namespace CatalogService.Persistence.Repositories
 
         public async Task<int> CountAsync(CancellationToken cancellationToken, Expression<Func<T, bool>>? predicate = null)
         {
-            Table.AsNoTracking();
-            if (predicate is not null) Table.Where(predicate);
-            return await Table.CountAsync(cancellationToken);
+            IQueryable<T> queryable = Table;
+            queryable = queryable.AsNoTracking();
+            if (predicate is not null) queryable = queryable.Where(predicate);
+            return await queryable.CountAsync(cancellationToken);
         }
 
         public async Task<IList<T>> GetAllAsync(CancellationToken cancellationToken, Expression<Func<T, bool>>? predicate = null, Func<IQueryable<T>, IIncludableQueryable<T, object>>? include = null, Func<IQueryable<T>, IOrderedQueryable<T>>? orderBy = null, bool enableTracking = false)

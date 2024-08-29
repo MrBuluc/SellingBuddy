@@ -13,7 +13,7 @@ namespace CatalogService.Persistence.Configurations
 
             builder.HasKey(b => b.Id);
 
-            builder.Property(b => b.Id).UseHiLo("catalog_brand_hilo").IsRequired();
+            builder.Property(b => b.Id).UseHiLo("brand_hilo").IsRequired();
 
             builder.Property(b => b.Name).IsRequired().HasMaxLength(100);
 

@@ -15,7 +15,7 @@ namespace CatalogService.Application.Features.Items.Queries.GetById
 
         public async Task<GetByIdItemQueryResponse> Handle(GetByIdItemQueryRequest request, CancellationToken cancellationToken)
         {
-            Item? item = await unitOfWork.GetReadRepository<Item>().GetAsync(i => i.Id == request.Id, cancellationToken);
+            Item? item = await unitOfWork.GetReadRepository<Item>().GetAsync(i => i.Id == request.Id && i.DeletedBy == null, cancellationToken);
 
             if (item is not null)
             {
