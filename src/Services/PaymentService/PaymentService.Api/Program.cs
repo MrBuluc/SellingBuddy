@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore;
+using PaymentService.Api;
 using Serilog;
 
 internal class Program
 {
-    private static string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+    private static readonly string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
     private static IConfiguration Configuration
     {

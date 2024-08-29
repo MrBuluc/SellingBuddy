@@ -55,23 +55,20 @@ namespace PaymentService.Api
             });
 
             services.AddTransient<OrderStartedIntegrationEventHandler>();
-            services.AddSingleton<IEventBus>(sp =>
+            services.AddSingleton(sp => EventBusFactory.Create(new()
             {
-                return EventBusFactory.Create(new()
+                ConnectionRetryCount = 5,
+                SubscriberClientAppName = "PaymentService",
+                EventBusType = EventBusType.RabbitMQ,
+                EventNameSuffix = "IntegrationEvent",
+                Connection = new ConnectionFactory()
                 {
-                    ConnectionRetryCount = 5,
-                    SubscriberClientAppName = "PaymentService",
-                    EventBusType = EventBusType.RabbitMQ,
-                    EventNameSuffix = "IntegrationEvent",
-                    Connection = new ConnectionFactory()
-                    {
-                        HostName = "207.154.222.131",
-                        Port = 5672,
-                        UserName = "guest",
-                        Password = "guest"
-                    }
-                }, sp)!;
-            });
+                    HostName = "207.154.222.131",
+                    Port = 5672,
+                    UserName = "guest",
+                    Password = "guest"
+                }
+            }, sp)!);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
