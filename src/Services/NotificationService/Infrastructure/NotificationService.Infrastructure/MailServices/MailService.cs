@@ -12,7 +12,7 @@ namespace NotificationService.Infrastructure.MailServices
 
         public async Task<bool> SendFailedMail(string recipient, string customerName, string orderId, string errorMessage) => SendMail(recipient, "Failed Order", await PrepareFailedOrderEmail(customerName, orderId, errorMessage));
 
-        private async Task<string> PrepareFailedOrderEmail(string customerName, string orderId, string errorMessage) => (await File.ReadAllTextAsync(Path.Combine(Environment.CurrentDirectory, "email-templates", "failed-email.html")))
+        private static async Task<string> PrepareFailedOrderEmail(string customerName, string orderId, string errorMessage) => (await File.ReadAllTextAsync(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.FullName, "email-templates", "failed-email.html")))
             .Replace("{{Customer Name}}", customerName)
             .Replace("{{OrderId}}", orderId)
             .Replace("{{Error Message}}", errorMessage);
@@ -40,7 +40,7 @@ namespace NotificationService.Infrastructure.MailServices
 
         public async Task<bool> SendSuccessMail(string recipient, string customerName, string orderId) => SendMail(recipient, "Success Order", await PrepareSuccessOrderEmail(customerName, orderId));
 
-        private async Task<string> PrepareSuccessOrderEmail(string customerName, string orderId) => (await File.ReadAllTextAsync(Path.Combine(Environment.CurrentDirectory, "email-templates", "success-email.html")))
+        private static async Task<string> PrepareSuccessOrderEmail(string customerName, string orderId) => (await File.ReadAllTextAsync(Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory())!.Parent!.Parent!.FullName, "email-templates", "success-email.html")))
             .Replace("{{Customer Name}}", customerName)
             .Replace("{{OrderId}}", orderId);
     }

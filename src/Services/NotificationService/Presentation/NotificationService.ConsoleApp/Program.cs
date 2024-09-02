@@ -3,6 +3,7 @@ using EventBus.Base.Abstraction;
 using EventBus.Factory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using NotificationService.Application;
 using NotificationService.ConsoleApp.IntegrationEvents.EventHandlers;
 using NotificationService.ConsoleApp.IntegrationEvents.Events;
@@ -13,12 +14,11 @@ using Serilog;
 internal class Program
 {
     private static string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-    private static IConfiguration Configuration
+    private static IConfiguration EmailConfiguration
     {
         get => new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("appsettings.json", optional: false)
-            .AddJsonFile($"appsettings.{env}.json", optional: true)
+            .AddJsonFile("emailSettings.json", optional: false)
             .AddEnvironmentVariables()
             .Build();
     }
@@ -46,6 +46,8 @@ internal class Program
         eventBus.Subscribe<OrderPaymentFailedIntegrationEvent, OrderPaymentFailedIntegrationEventHandler>();
 
         Log.Logger.Information("NotificationService Application is Running...");
+
+        Console.ReadLine();
     }
 
     private static void ConfigureServices(ServiceCollection services)
@@ -69,6 +71,12 @@ internal class Program
         }, sp)!);
 
         services.AddApplication();
-        services.AddInfrastructure(Configuration);
+        services.AddInfrastructure(EmailConfiguration);
+
+        services.AddLogging(configure =>
+        {
+            configure.AddConsole();
+            configure.AddDebug();
+        });
     }
 }

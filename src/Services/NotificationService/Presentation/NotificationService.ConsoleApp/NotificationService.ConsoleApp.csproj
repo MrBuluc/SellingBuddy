@@ -8,21 +8,32 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="serilog.Development.json" />
-	  <None Remove="serilog.json" />
+		<None Remove="serilog.Development.json" />
+		<None Remove="serilog.json" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Content Include="serilog.Development.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
-	  <Content Include="serilog.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	    <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-	    <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-	  </Content>
+		<Content Include="serilog.Development.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+		<Content Include="serilog.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Remove="emailSettings.json"/>
+	</ItemGroup>
+	<ItemGroup>
+		<Content Include="emailSettings.json">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+			<ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+			<CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+		</Content>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -34,9 +45,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\EventBus.Base\EventBus.Base.csproj" />
-	  <ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\EventBus.Factory\EventBus.Factory.csproj" />
-	  <ProjectReference Include="..\..\Infrastructure\NotificationService.Infrastructure\NotificationService.Infrastructure.csproj" />
+		<ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\EventBus.Base\EventBus.Base.csproj" />
+		<ProjectReference Include="..\..\..\..\BuildingBlocks\EventBus\EventBus.Factory\EventBus.Factory.csproj" />
+		<ProjectReference Include="..\..\Infrastructure\NotificationService.Infrastructure\NotificationService.Infrastructure.csproj" />
 	</ItemGroup>
 
 </Project>

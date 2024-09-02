@@ -15,7 +15,7 @@ namespace PaymentService.Api.IntegrationEvents.EventHandlers
 
             logger.LogInformation($"OrderStartedIntegrationEventHandler in PaymentService is fired with PaymentSuccess: {isPaymentSuccess}, orderId: {@event.OrderId}");
 
-            eventBus.Publish(isPaymentSuccess ? new OrderPaymentSuccessIntegrationEvent(@event.OrderId) : new OrderPaymentFailedIntegrationEvent(@event.OrderId, "Card number is invalid"));
+            eventBus.Publish(isPaymentSuccess ? new OrderPaymentSuccessIntegrationEvent(@event.OrderId, @event.CustomerName, @event.CustomerEmail) : new OrderPaymentFailedIntegrationEvent(@event.OrderId, "Card number is invalid", @event.CustomerName, @event.CustomerEmail));
 
             return Task.CompletedTask;
         }
