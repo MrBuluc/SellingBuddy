@@ -4,7 +4,7 @@ using CatalogService.Application.Interfaces.UnitOfWorks;
 using CatalogService.Domain.Entities;
 using MediatR;
 
-namespace CatalogService.Application.Features.Items.Command.Create
+namespace CatalogService.Application.Features.Items.Commands.Create
 {
     public class CreateItemCommandHandler(IMapper mapper, IUnitOfWork unitOfWork) : BaseHandler(mapper, unitOfWork), IRequestHandler<CreateItemCommandRequest, Unit>
     {

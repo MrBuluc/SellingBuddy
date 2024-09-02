@@ -1,4 +1,5 @@
-﻿using CatalogService.Application.Features.Images.Queries.Get;
+﻿using CatalogService.Application.Features.Images.Commands.Upload;
+using CatalogService.Application.Features.Images.Queries.Get;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -12,7 +13,7 @@ namespace CatalogService.Api.Controllers
         private readonly IMediator mediator = mediator;
 
         [HttpGet]
-        public async Task<IActionResult> Get() => Ok("Catalog Service API is running");
+        public IActionResult Get() => Ok("Catalog Service API is running");
 
         [HttpGet]
         [Route("api/v1/items/{itemId:int}/pic")]
@@ -28,5 +29,9 @@ namespace CatalogService.Api.Controllers
 
             return File(response.Buffer, response.MimeType);
         }
+
+        [HttpPost]
+        [Route("api/v1/items/{itemId:int}/pic")]
+        public async Task<IActionResult> Upload(int itemId, IFormFile image) => Ok(await mediator.Send(new UploadImageCommandRequest() { ItemId = itemId, Image = image }));
     }
 }

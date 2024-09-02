@@ -1,7 +1,9 @@
 ﻿using CatalogService.Application.Interfaces.Services;
 using CatalogService.Application.Settings;
 using CatalogService.Domain.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using System.Text;
 
 namespace CatalogService.Infrastructure
 {
@@ -31,5 +33,11 @@ namespace CatalogService.Infrastructure
             ".svg" => "image/svg+xml",
             _ => "application/octet-stream"
         };
+
+        public void SaveIFormFile(IFormFile image, string path)
+        {
+            using FileStream fileStream = File.Create($"{path}\\{image.FileName}");
+            image.CopyTo(fileStream);
+        }
     }
 }

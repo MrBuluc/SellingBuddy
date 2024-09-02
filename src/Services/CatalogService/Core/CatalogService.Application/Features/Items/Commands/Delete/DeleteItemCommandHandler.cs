@@ -3,7 +3,7 @@ using CatalogService.Application.Interfaces.UnitOfWorks;
 using CatalogService.Domain.Entities;
 using MediatR;
 
-namespace CatalogService.Application.Features.Items.Command.Delete
+namespace CatalogService.Application.Features.Items.Commands.Delete
 {
     public class DeleteItemCommandHandler(IUnitOfWork unitOfWork) : IRequestHandler<DeleteItemCommandRequest, Unit>
     {

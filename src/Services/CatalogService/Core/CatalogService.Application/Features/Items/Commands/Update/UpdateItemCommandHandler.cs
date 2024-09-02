@@ -5,7 +5,7 @@ using CatalogService.Application.Interfaces.UnitOfWorks;
 using CatalogService.Domain.Entities;
 using MediatR;
 
-namespace CatalogService.Application.Features.Items.Command.Update
+namespace CatalogService.Application.Features.Items.Commands.Update
 {
     public class UpdateItemCommandHandler(IMapper mapper, IUnitOfWork unitOfWork) : BaseHandler(mapper, unitOfWork), IRequestHandler<UpdateItemCommandRequest, Unit>
     {

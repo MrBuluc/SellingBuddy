@@ -1,9 +1,9 @@
 ﻿using CatalogService.Api.Models;
 using CatalogService.Application.DTOs;
 using CatalogService.Application.Features.Brands.Queries.GetAll;
-using CatalogService.Application.Features.Items.Command.Create;
-using CatalogService.Application.Features.Items.Command.Delete;
-using CatalogService.Application.Features.Items.Command.Update;
+using CatalogService.Application.Features.Items.Commands.Create;
+using CatalogService.Application.Features.Items.Commands.Delete;
+using CatalogService.Application.Features.Items.Commands.Update;
 using CatalogService.Application.Features.Items.Queries.GetAllByPaging;
 using CatalogService.Application.Features.Items.Queries.GetByBrandId;
 using CatalogService.Application.Features.Items.Queries.GetById;

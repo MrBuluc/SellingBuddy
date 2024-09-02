@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CatalogService.Application.Features.Items.Command.Create
+namespace CatalogService.Application.Features.Items.Commands.Create
 {
     public class CreateItemCommandRequest : IRequest<Unit>
     {

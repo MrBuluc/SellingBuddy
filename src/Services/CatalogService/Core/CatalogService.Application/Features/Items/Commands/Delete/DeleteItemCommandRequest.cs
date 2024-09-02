@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CatalogService.Application.Features.Items.Command.Delete
+namespace CatalogService.Application.Features.Items.Commands.Delete
 {
     public class DeleteItemCommandRequest : IRequest<Unit>
     {

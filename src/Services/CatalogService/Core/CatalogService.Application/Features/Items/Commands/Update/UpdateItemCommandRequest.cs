@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace CatalogService.Application.Features.Items.Command.Update
+namespace CatalogService.Application.Features.Items.Commands.Update
 {
     public class UpdateItemCommandRequest : IRequest<Unit>
     {
