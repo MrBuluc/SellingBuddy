@@ -1,25 +1,61 @@
-var builder = WebApplication.CreateBuilder(args);
+using IdentityService.Persistence.Contexts;
+using IdentityService.Persistence.Extensions;
+using Serilog;
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+namespace IdentityService.Api
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    public class Program
+    {
+        private static readonly string? env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+
+        private static IConfiguration Configuration
+        {
+            get => new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: false)
+                .AddJsonFile($"appsettings.{env}.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+        }
+
+        private static IConfiguration SerilogConfiguration
+        {
+            get => new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("serilog.json", optional: false)
+                .AddJsonFile($"serilog.{env}.json", optional: true)
+                .AddEnvironmentVariables()
+                .Build();
+        }
+
+        public static IHost BuildWebHost(IConfiguration configuration) => Host.CreateDefaultBuilder()
+            .UseDefaultServiceProvider((context, options) =>
+            {
+                options.ValidateOnBuild = false;
+                options.ValidateScopes = false;
+            })
+            .ConfigureAppConfiguration(iConfigurationBuilder => iConfigurationBuilder.AddConfiguration(configuration))
+            .ConfigureWebHostDefaults(webBuilder =>
+            {
+                webBuilder.UseStartup<Startup>();
+                webBuilder.ConfigureLogging(iLoggingBuilder => iLoggingBuilder.ClearProviders());
+            })
+            .UseSerilog()
+            .Build();
+
+        private static void Main(string[] args)
+        {
+            IHost host = BuildWebHost(Configuration);
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(SerilogConfiguration)
+                .CreateLogger();
+
+            host.MigrateDbContext<IdentityServiceDbContext>();
+
+            Log.Logger.Information("Identity Service Application is Running...");
+
+            host.Run();
+        }
+    }
 }
-
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
