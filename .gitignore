@@ -364,3 +364,4 @@ FodyWeavers.xsd
 /src/Services/CatalogService/Infrastructure/CatalogService.Persistence/PrivateInformations.json
 /src/Services/NotificationService/Presentation/NotificationService.ConsoleApp/appsettings.Development.json
 /src/Services/NotificationService/Presentation/NotificationService.ConsoleApp/emailSettings.json
+/src/Services/IdentityService/Infrastructure/IdentityService.Persistence/PrivateInformations.json
