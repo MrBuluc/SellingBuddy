@@ -15,7 +15,7 @@ namespace WebApiGateway.Application.Features.BasketItem.Command.Add
         {
             CatalogItem item = await catalogService.GetItemAsync(request.CatalogItemId) ?? throw new CatalogItemNotFoundException();
 
-            Models.Basket.BasketData currentBasket = await basketService.GetById(request.BasketId);
+            Models.Basket.BasketData currentBasket = await basketService.GetById(request.BasketId) ?? throw new BasketNotFoundException();
 
             Models.Basket.BasketItem? basketItem = currentBasket.Items.SingleOrDefault(i => i.Item.Id == item.Id);
 

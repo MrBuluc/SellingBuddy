@@ -4,7 +4,7 @@ namespace WebApiGateway.Application.Interfaces.Basket
 {
     public interface IBasketService
     {
-        Task<BasketData> GetById(string id);
-        Task<BasketData> UpdateAsync(BasketData basket);
+        Task<BasketData?> GetById(string id);
+        Task<BasketData?> UpdateAsync(BasketData basket);
     }
 }
