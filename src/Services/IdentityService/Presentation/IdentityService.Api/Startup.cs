@@ -55,12 +55,14 @@ namespace IdentityService.Api
             services.AddCustomMapper();
             services.AddInfrastructure(Configuration);
 
+            services.ConfigureConsul(Configuration);
+
             services.AddHealthChecks()
                 .AddCheck("self", () => HealthCheckResult.Healthy());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -96,6 +98,8 @@ namespace IdentityService.Api
                     }
                 });
             });
+
+            await app.RegisterWithConsul(lifetime, Configuration);
         }
     }
 }

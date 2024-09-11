@@ -53,10 +53,12 @@ namespace CatalogService.Api
             services.AddApplication(Configuration);
             services.AddCustomMapper();
             services.AddInfrastructure(Configuration);
+
+            services.ConfigureConsul(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -82,6 +84,8 @@ namespace CatalogService.Api
             {
                 endpoints.MapControllers();
             });
+
+            await app.RegisterWithConsul(lifetime, Configuration);
         }
     }
 }

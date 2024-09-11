@@ -4,6 +4,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
 using Ocelot.Provider.Consul;
+using Web.ApiGateway.Consul;
 using WebApiGateway.Application;
 using WebApiGateway.Application.Exceptions;
 using WebApiGateway.Infrastructure;
@@ -37,7 +38,7 @@ namespace Web.ApiGateway
             services.AddApplication();
             services.AddInfrastructure(Configuration);
 
-            services.AddOcelot().AddConsul();
+            services.AddOcelot().AddConsul<MyConsulServiceBuilder>();
 
             ConfigureHttpClient(services);
 

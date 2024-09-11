@@ -1,7 +1,6 @@
 ﻿using IdentityService.Application.Features.Auth.Command.Login;
 using IdentityService.Application.Features.Users.Command.Create;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace IdentityService.Api.Controllers

@@ -118,15 +118,37 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityService.Persistence
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{50755070-3B22-4B62-8625-F2EFD4F88A67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiGateway.Application", "src\ApiGateways\WebApiGateway\Core\WebApiGateway.Application\WebApiGateway.Application.csproj", "{FBBB8193-1A0B-4044-836C-FD2AA086E9D0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiGateway.Application", "src\ApiGateways\WebApiGateway\Core\WebApiGateway.Application\WebApiGateway.Application.csproj", "{FBBB8193-1A0B-4044-836C-FD2AA086E9D0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{C545C267-9930-48CD-89BD-92C68D34530C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApiGateway.Infrastructure", "src\ApiGateways\WebApiGateway\Infrastructure\WebApiGateway.Infrastructure\WebApiGateway.Infrastructure.csproj", "{7EB0963B-7F30-4ECE-B7F2-4038F14E3683}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiGateway.Infrastructure", "src\ApiGateways\WebApiGateway\Infrastructure\WebApiGateway.Infrastructure\WebApiGateway.Infrastructure.csproj", "{7EB0963B-7F30-4ECE-B7F2-4038F14E3683}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{BF0ACECD-44EF-46C1-AE3D-913034BA4BB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Web.ApiGateway", "src\ApiGateways\WebApiGateway\Presentation\Web.ApiGateway\Web.ApiGateway.csproj", "{27656DD8-309D-4D2C-8988-7AD9C14CCC03}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web.ApiGateway", "src\ApiGateways\WebApiGateway\Presentation\Web.ApiGateway\Web.ApiGateway.csproj", "{27656DD8-309D-4D2C-8988-7AD9C14CCC03}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docker-compose-files", "docker-compose-files", "{915FD43E-8357-4D80-8064-262FD00EFD05}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "consul", "consul", "{9892FAF2-F0AA-480F-9C9B-BC64D6090C12}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose-files\consul\docker-compose.yml = docker-compose-files\consul\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "rabbitmq", "rabbitmq", "{0E2649EB-BEA7-46F0-AB8A-3AB63DD0FA49}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose-files\rabbitmq\docker-compose.yml = docker-compose-files\rabbitmq\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "redis", "redis", "{9FD1F1A2-86D2-48A9-AB86-141CB260ECFF}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose-files\redis\docker-compose.yml = docker-compose-files\redis\docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sqlserver", "sqlserver", "{CECAC73F-0F7C-4785-9DEF-65C52B045A83}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose-files\sqlserver\docker-compose.yml = docker-compose-files\sqlserver\docker-compose.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -313,6 +335,10 @@ Global
 		{7EB0963B-7F30-4ECE-B7F2-4038F14E3683} = {C545C267-9930-48CD-89BD-92C68D34530C}
 		{BF0ACECD-44EF-46C1-AE3D-913034BA4BB9} = {0C203312-30BF-4F53-80ED-2B229D0652D7}
 		{27656DD8-309D-4D2C-8988-7AD9C14CCC03} = {BF0ACECD-44EF-46C1-AE3D-913034BA4BB9}
+		{9892FAF2-F0AA-480F-9C9B-BC64D6090C12} = {915FD43E-8357-4D80-8064-262FD00EFD05}
+		{0E2649EB-BEA7-46F0-AB8A-3AB63DD0FA49} = {915FD43E-8357-4D80-8064-262FD00EFD05}
+		{9FD1F1A2-86D2-48A9-AB86-141CB260ECFF} = {915FD43E-8357-4D80-8064-262FD00EFD05}
+		{CECAC73F-0F7C-4785-9DEF-65C52B045A83} = {915FD43E-8357-4D80-8064-262FD00EFD05}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D287010-E22E-4F21-BF78-5D66B084A937}

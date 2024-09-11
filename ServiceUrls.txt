@@ -1,0 +1,9 @@
+Notification Service -> Console App
+
+Web.ApiGateway -> http://localhost:5117
+
+PaymentService -> http://localhost:5102
+OrderService -> 
+BasketService ->
+CatalogService -> http://localhost:5182
+IdentityService -> http://localhost:5140
