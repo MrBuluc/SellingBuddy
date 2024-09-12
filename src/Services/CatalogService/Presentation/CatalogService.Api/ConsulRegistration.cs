@@ -22,7 +22,6 @@ namespace CatalogService.Api
 
             ILogger<IApplicationBuilder> logger = app.ApplicationServices.GetRequiredService<ILoggerFactory>().CreateLogger<IApplicationBuilder>();
 
-            //Uri uri = configuration.GetValue<Uri>("ConsulConfig:ServiceAddress") ?? throw GenerateException("ConsulConfig:ServiceAddress");
             Uri uri = new(((app.Properties["server.Features"] as FeatureCollection ?? throw GenerateException("server.Features"))
                 .Get<IServerAddressesFeature>() ?? throw GenerateException("IServerAddressesFeature"))
                 .Addresses.First());

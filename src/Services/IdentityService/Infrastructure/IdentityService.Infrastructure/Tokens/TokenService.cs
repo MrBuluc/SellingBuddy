@@ -20,6 +20,7 @@ namespace IdentityService.Infrastructure.Tokens
                 new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new(JwtRegisteredClaimNames.Email, user.Email!),
+                new(JwtRegisteredClaimNames.Name, user.Name),
             ];
 
             await userManager.AddClaimsAsync(user, claims);

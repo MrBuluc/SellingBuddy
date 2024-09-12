@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace CatalogService.Application.Exceptions
+namespace BasketService.Application.Exceptions
 {
     public class ExceptionModel : ErrorStatusCode
     {

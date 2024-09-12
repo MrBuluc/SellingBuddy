@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using SendGrid.Helpers.Errors.Model;
 
-namespace CatalogService.Application.Exceptions
+namespace BasketService.Application.Exceptions
 {
     public class ExceptionMiddleware : IMiddleware
     {
