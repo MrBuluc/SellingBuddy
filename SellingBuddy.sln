@@ -150,9 +150,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sqlserver", "sqlserver", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{B329E268-D3E6-4868-8542-A87DF0A5543A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketService.Application", "src\Services\BasketService\Core\BasketService.Application\BasketService.Application.csproj", "{5C108188-BE73-4B6D-ACE2-320A0C0D1C86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketService.Application", "src\Services\BasketService\Core\BasketService.Application\BasketService.Application.csproj", "{5C108188-BE73-4B6D-ACE2-320A0C0D1C86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketService.Domain", "src\Services\BasketService\Core\BasketService.Domain\BasketService.Domain.csproj", "{C144D15E-5793-41E3-AF0D-88DEFA823EEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketService.Domain", "src\Services\BasketService\Core\BasketService.Domain\BasketService.Domain.csproj", "{C144D15E-5793-41E3-AF0D-88DEFA823EEB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketService.Mapper", "src\Services\BasketService\Core\BasketService.Mapper\BasketService.Mapper.csproj", "{22D8691C-886E-4201-9C0F-672B98F97CF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -280,6 +282,10 @@ Global
 		{C144D15E-5793-41E3-AF0D-88DEFA823EEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C144D15E-5793-41E3-AF0D-88DEFA823EEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C144D15E-5793-41E3-AF0D-88DEFA823EEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22D8691C-886E-4201-9C0F-672B98F97CF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22D8691C-886E-4201-9C0F-672B98F97CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22D8691C-886E-4201-9C0F-672B98F97CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22D8691C-886E-4201-9C0F-672B98F97CF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -349,6 +355,7 @@ Global
 		{B329E268-D3E6-4868-8542-A87DF0A5543A} = {93088A80-057C-4F2F-9F1A-5F63CC2FBE2B}
 		{5C108188-BE73-4B6D-ACE2-320A0C0D1C86} = {B329E268-D3E6-4868-8542-A87DF0A5543A}
 		{C144D15E-5793-41E3-AF0D-88DEFA823EEB} = {B329E268-D3E6-4868-8542-A87DF0A5543A}
+		{22D8691C-886E-4201-9C0F-672B98F97CF7} = {B329E268-D3E6-4868-8542-A87DF0A5543A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D287010-E22E-4F21-BF78-5D66B084A937}
