@@ -6,6 +6,6 @@ namespace BasketService.Application.Interfaces.Repositories
     {
         Task<T?> GetAsync(string id);
 
-        IEnumerable<string?> GetUsers();
+        IEnumerable<string>? GetUsers();
     }
 }

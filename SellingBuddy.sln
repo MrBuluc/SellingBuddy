@@ -156,6 +156,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketService.Domain", "src
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketService.Mapper", "src\Services\BasketService\Core\BasketService.Mapper\BasketService.Mapper.csproj", "{22D8691C-886E-4201-9C0F-672B98F97CF7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastructure", "{BF5599F1-94AE-44B3-8DB9-2F7E5441C7F4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketService.Persistence", "src\Services\BasketService\Infrastructure\BasketService.Persistence\BasketService.Persistence.csproj", "{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -286,6 +290,10 @@ Global
 		{22D8691C-886E-4201-9C0F-672B98F97CF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{22D8691C-886E-4201-9C0F-672B98F97CF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{22D8691C-886E-4201-9C0F-672B98F97CF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -356,6 +364,8 @@ Global
 		{5C108188-BE73-4B6D-ACE2-320A0C0D1C86} = {B329E268-D3E6-4868-8542-A87DF0A5543A}
 		{C144D15E-5793-41E3-AF0D-88DEFA823EEB} = {B329E268-D3E6-4868-8542-A87DF0A5543A}
 		{22D8691C-886E-4201-9C0F-672B98F97CF7} = {B329E268-D3E6-4868-8542-A87DF0A5543A}
+		{BF5599F1-94AE-44B3-8DB9-2F7E5441C7F4} = {93088A80-057C-4F2F-9F1A-5F63CC2FBE2B}
+		{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F} = {BF5599F1-94AE-44B3-8DB9-2F7E5441C7F4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D287010-E22E-4F21-BF78-5D66B084A937}

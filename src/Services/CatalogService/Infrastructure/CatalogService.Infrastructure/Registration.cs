@@ -1,5 +1,4 @@
 ﻿using CatalogService.Application.Interfaces.Services;
-using CatalogService.Application.Settings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
