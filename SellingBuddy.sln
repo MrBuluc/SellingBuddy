@@ -160,6 +160,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketService.Persistence", "src\Services\BasketService\Infrastructure\BasketService.Persistence\BasketService.Persistence.csproj", "{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{9132158E-725F-4D77-AE10-036373AFA85B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketService.Api", "src\Services\BasketService\Presentation\BasketService.Api\BasketService.Api.csproj", "{E9534473-74B2-4160-8F0C-3B5CAF54E83A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -294,6 +298,10 @@ Global
 		{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9534473-74B2-4160-8F0C-3B5CAF54E83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9534473-74B2-4160-8F0C-3B5CAF54E83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9534473-74B2-4160-8F0C-3B5CAF54E83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9534473-74B2-4160-8F0C-3B5CAF54E83A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -366,6 +374,8 @@ Global
 		{22D8691C-886E-4201-9C0F-672B98F97CF7} = {B329E268-D3E6-4868-8542-A87DF0A5543A}
 		{BF5599F1-94AE-44B3-8DB9-2F7E5441C7F4} = {93088A80-057C-4F2F-9F1A-5F63CC2FBE2B}
 		{76B69BB7-5BC7-4617-BF6F-6F53B786FB7F} = {BF5599F1-94AE-44B3-8DB9-2F7E5441C7F4}
+		{9132158E-725F-4D77-AE10-036373AFA85B} = {93088A80-057C-4F2F-9F1A-5F63CC2FBE2B}
+		{E9534473-74B2-4160-8F0C-3B5CAF54E83A} = {9132158E-725F-4D77-AE10-036373AFA85B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0D287010-E22E-4F21-BF78-5D66B084A937}
