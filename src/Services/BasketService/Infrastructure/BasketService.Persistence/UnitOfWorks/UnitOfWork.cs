@@ -11,8 +11,6 @@ namespace BasketService.Persistence.UnitOfWorks
         private readonly ConnectionMultiplexer redis = redis;
         private readonly ILoggerFactory loggerFactory = loggerFactory;
 
-        public ValueTask DisposeAsync() => redis.DisposeAsync();
-
         IReadRepository<T> IUnitOfWork.GetReadRepository<T>() => new ReadRepository<T>(redis);
 
         IWriteRepository<T> IUnitOfWork.GetWriteRepository<T>() => new WriteRepository<T>(loggerFactory, redis);

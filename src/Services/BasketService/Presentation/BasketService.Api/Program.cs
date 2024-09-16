@@ -34,7 +34,7 @@ internal class Program
         .ConfigureAppConfiguration(iConfigurationBuilder => iConfigurationBuilder.AddConfiguration(configuration))
         .ConfigureWebHostDefaults(webBuilder =>
         {
-            webBuilder.UseStartup<Startup>();
+            webBuilder.UseStartup<Startup>(webHostBuilderContext => new(configuration, Log.Logger));
             webBuilder.ConfigureLogging(iLoggingBuilder => iLoggingBuilder.ClearProviders());
         })
         .UseSerilog()

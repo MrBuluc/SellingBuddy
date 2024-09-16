@@ -12,10 +12,10 @@ using RabbitMQ.Client;
 
 namespace BasketService.Api
 {
-    public class Startup(IConfiguration configuration, ILogger<Startup> logger)
+    public class Startup(IConfiguration configuration, Serilog.ILogger logger)
     {
         private readonly IConfiguration configuration = configuration;
-        private readonly ILogger<Startup> logger = logger;
+        private readonly Serilog.ILogger logger = logger;
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -69,8 +69,6 @@ namespace BasketService.Api
 
             services.ConfigureConsul(configuration);
 
-            services.AddHttpContextAccessor();
-
             services.AddTransient<OrderCreatedIntegrationEventHandler>();
             services.AddSingleton(sp => EventBusFactory.Create(new()
             {
@@ -97,7 +95,7 @@ namespace BasketService.Api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
-            logger.LogInformation("System up and running - From Configure {TestParam}", "Mr. Bülüç");
+            logger.Information("System up and running - From Configure {TestParam}", "Mr. Bülüç");
 
             if (env.IsDevelopment())
             {

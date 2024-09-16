@@ -2,10 +2,9 @@
 
 namespace BasketService.Domain.Entities
 {
-    public class CustomerBasket : EntityBase<Guid>
+    public class CustomerBasket() : EntityBase<Guid>(Guid.NewGuid())
     {
-        public Guid Id { get; set; } = Guid.NewGuid();
         public string BuyerId { get; set; }
-        public List<BasketItem> Items { get; set; }
+        public List<BasketItem> Items { get; set; } = [];
     }
 }
