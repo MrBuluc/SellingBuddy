@@ -2,11 +2,14 @@
 
 namespace OrderService.Domain.Common
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity : IBaseEntity
     {
-        public virtual Guid Id { get; protected set; }
+        public virtual Guid Id { get; set; }
         private List<INotification>? domainEvents;
         public IReadOnlyCollection<INotification>? DomainEvents => domainEvents?.AsReadOnly();
+
+        public DateTime CreatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
 
         public void AddDomainEvent(INotification notification)
         {
@@ -23,7 +26,7 @@ namespace OrderService.Domain.Common
 
         public override bool Equals(object? obj)
         {
-            if (obj == null || !(obj is BaseEntity)) return false;
+            if (obj == null || obj is not BaseEntity) return false;
 
             if (ReferenceEquals(this, obj)) return true;
 

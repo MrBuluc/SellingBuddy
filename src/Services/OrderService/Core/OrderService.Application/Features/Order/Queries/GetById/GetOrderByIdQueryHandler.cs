@@ -13,9 +13,9 @@ namespace OrderService.Application.Features.Order.Queries.GetById
         public async Task<GetOrderByIdQueryResponse> Handle(GetOrderByIdQueryRequest request, CancellationToken cancellationToken)
         {
             mapper.Map<AddressDTO, Address>(new Address());
-            mapper.Map<OrderItemDTO, OrderItem>(new OrderItem());
+            mapper.Map<OrderItemDTO, Item>(new Item());
 
-            return mapper.Map<GetOrderByIdQueryResponse, Domain.AggregateModels.OrderAggregate.Order>(await unitOfWork.GetReadRepository<Domain.AggregateModels.OrderAggregate.Order>().GetByIdAsync(request.OrderId, o => o.OrderItems) ?? throw new OrderNotFoundException());
+            return mapper.Map<GetOrderByIdQueryResponse, Domain.AggregateModels.OrderAggregate.Order>(await unitOfWork.GetReadRepository<Domain.AggregateModels.OrderAggregate.Order>().GetByIdAsync(request.OrderId, o => o.Items) ?? throw new OrderNotFoundException());
         }
     }
 }

@@ -28,6 +28,7 @@ namespace CatalogService.Persistence
             services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
+            
             return services;
         }
     }

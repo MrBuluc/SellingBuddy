@@ -10,21 +10,21 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
         public int Quantity { get; private set; }
         public string Description { get; private set; }
         public Address Address { get; private set; }
-        private readonly List<OrderItem> orderItems = [];
-        public IReadOnlyCollection<OrderItem> OrderItems => orderItems;
+        private readonly List<Item> items = [];
+        public IReadOnlyCollection<Item> Items => items;
 
         public Guid? BuyerId { get; set; }
         public Buyer Buyer { get; private set; }
 
-        private int orderStatusId;
-        public OrderStatus OrderStatus { get; private set; }
+        private int statusId;
+        public Status Status { get; private set; }
 
         protected Order() => Id = Guid.NewGuid();
 
         public Order(string userName, Address address, string cardNumber, string cardSecurityNumber, string cardHolderName, DateTime cardExpiration, Guid? buyerId = null) : this()
         {
             BuyerId = buyerId;
-            orderStatusId = OrderStatus.Submitted.Id;
+            statusId = Status.Submitted.Id;
             Date = DateTime.UtcNow;
             Address = address;
 
@@ -45,7 +45,7 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
         {
             // orderItem validations
 
-            orderItems.Add(new()
+            items.Add(new()
             {
                 Product = product,
                 Units = units
