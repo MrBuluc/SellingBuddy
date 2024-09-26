@@ -15,6 +15,8 @@ namespace OrderService.Persistence.UnitOfWorks
 
         public async ValueTask DisposeAsync() => await context.DisposeAsync();
 
+        public IOrderReadRepository GetOrderReadRepository() => new OrderReadRepository(context);
+
         public IReadRepository<T> GetReadRepository<T>() where T : BaseEntity => new ReadRepository<T>(context);
 
         public IWriteRepository<T> GetWriteRepository<T>() where T : BaseEntity => new WriteRepository<T>(context);

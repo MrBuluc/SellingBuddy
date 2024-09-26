@@ -24,6 +24,7 @@ namespace OrderService.Persistence
             dbContext.Database.Migrate();
 
             services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
+            services.AddScoped<IOrderReadRepository, OrderReadRepository>();
             services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();

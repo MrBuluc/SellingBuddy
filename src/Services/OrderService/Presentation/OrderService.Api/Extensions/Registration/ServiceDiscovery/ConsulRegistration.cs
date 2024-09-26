@@ -53,3 +53,4 @@ namespace OrderService.Api.Extensions.Registration.ServiceDiscovery
             return app;
         }
     }
+}

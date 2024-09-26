@@ -9,7 +9,7 @@ namespace OrderService.Persistence.Extensions
         public static async Task PublishDomainEventsAsync(this IMediator mediator, OrderDbContext context)
         {
             IEnumerable<Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<BaseEntity>> domainEntities = context.ChangeTracker.Entries<BaseEntity>()
-                .Where(e => e.Entity.DomainEvents is not null && e.Entity.DomainEvents.Any());
+                .Where(e => e.Entity.DomainEvents is not null && e.Entity.DomainEvents.Count != 0);
 
             List<INotification> domainEvents = domainEntities.SelectMany(entity => entity.Entity.DomainEvents!).ToList();
 

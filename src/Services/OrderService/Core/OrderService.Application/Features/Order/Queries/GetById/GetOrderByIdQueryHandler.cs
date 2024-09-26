@@ -16,7 +16,7 @@ namespace OrderService.Application.Features.Order.Queries.GetById
             mapper.Map<OrderItemDTO, Item>(new Item());
             mapper.Map<ProductDTO, Product>(new Product());
 
-            Domain.AggregateModels.OrderAggregate.Order order = await unitOfWork.GetReadRepository<Domain.AggregateModels.OrderAggregate.Order>().GetByIdAsync(request.OrderId, o => o.Items) ?? throw new OrderNotFoundException();
+            Domain.AggregateModels.OrderAggregate.Order order = await unitOfWork.GetOrderReadRepository().GetByIdAsync(request.OrderId, o => o.Items) ?? throw new OrderNotFoundException();
             GetOrderByIdQueryResponse getOrderByIdQueryResponse = mapper.Map<GetOrderByIdQueryResponse, Domain.AggregateModels.OrderAggregate.Order>(order);
             getOrderByIdQueryResponse.Total = order.Items.Sum(i => i.Units * i.Product.UnitPrice);
 
