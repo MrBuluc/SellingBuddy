@@ -1,6 +1,6 @@
 ﻿namespace OrderService.Domain.AggregateModels.OrderAggregate
 {
-    public class Address
+    public record Address
     {
         public string Street { get; set; }
         public string City { get; set; }
