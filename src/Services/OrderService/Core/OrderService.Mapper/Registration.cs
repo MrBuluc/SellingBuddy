@@ -5,9 +5,11 @@ namespace OrderService.Mapper
 {
     public static class Registration
     {
-        public static void AddCustomMapper(this IServiceCollection services)
+        public static IServiceCollection AddCustomMapper(this IServiceCollection services)
         {
             services.AddSingleton<IMapper, AutoMapper.Mapper>();
+
+            return services;
         }
     }
 }
