@@ -20,7 +20,7 @@ namespace OrderService.Application.DomainEventHandlers
                 buyer = new(notification.UserName);
             }
 
-            buyer!.VerifyAndAddCard(notification.Card.Number, notification.Card.SecurityNumber, notification.Card.HolderName, notification.Card.Expiration, notification.Order.Id);
+            buyer!.VerifyOrAddCard(notification.Card.Number, notification.Card.SecurityNumber, notification.Card.HolderName, notification.Card.Expiration, notification.Order.Id);
 
             Interfaces.Repositories.IWriteRepository<Buyer> writeRepository = unitOfWork.GetWriteRepository<Buyer>();
             Buyer buyerUpdated = buyerOriginallyExisted ? writeRepository.Update(buyer) : await writeRepository.AddAsync(buyer);

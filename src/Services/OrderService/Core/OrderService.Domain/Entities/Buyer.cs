@@ -9,7 +9,7 @@ namespace OrderService.Domain.Entities
         private List<Card> cards = [];
         public IEnumerable<Card> Cards => cards.AsReadOnly();
 
-        public Card VerifyAndAddCard(string cardNumber, string securityNumber, string cardHolderName, DateTime expiration, Guid orderId)
+        public Card VerifyOrAddCard(string cardNumber, string securityNumber, string cardHolderName, DateTime expiration, Guid orderId)
         {
             Card? existingCard = cards.SingleOrDefault(c => c.IsEqualTo(cardNumber, expiration));
 
