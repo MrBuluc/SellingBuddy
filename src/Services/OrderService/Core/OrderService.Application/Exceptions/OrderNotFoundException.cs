@@ -1,4 +1,6 @@
-﻿namespace OrderService.Application.Exceptions
+﻿using SendGrid.Helpers.Errors.Model;
+
+namespace OrderService.Application.Exceptions
 {
-    public class OrderNotFoundException() : Exception("Order Not Found!") { }
+    public class OrderNotFoundException() : NotFoundException("Order Not Found!") { }
 }

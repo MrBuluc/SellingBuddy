@@ -10,6 +10,6 @@ namespace BasketService.Api.IntegrationEvents.Events
         public AddressDTO Address { get; set; }
         public CardDTO Card { get; set; }
         public string Buyer { get; set; }
-        public CustomerBasketDTO CustomerBasket { get; set; }
+        public CustomerBasketDTO Basket { get; set; }
     }
 }

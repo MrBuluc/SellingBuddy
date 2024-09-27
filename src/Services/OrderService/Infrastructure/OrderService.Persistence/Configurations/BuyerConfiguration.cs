@@ -9,7 +9,7 @@ namespace OrderService.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Buyer> builder)
         {
-            builder.ToTable("buyers", OrderDbContext.DEFAULT_SCHEMA);
+            builder.ToTable("Buyer", OrderDbContext.DEFAULT_SCHEMA);
 
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Id).ValueGeneratedOnAdd();

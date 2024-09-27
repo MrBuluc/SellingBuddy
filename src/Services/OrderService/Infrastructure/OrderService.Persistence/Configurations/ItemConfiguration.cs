@@ -9,18 +9,20 @@ namespace OrderService.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Item> builder)
         {
-            builder.ToTable("Items", OrderDbContext.DEFAULT_SCHEMA);
+            builder.ToTable("Item", OrderDbContext.DEFAULT_SCHEMA);
 
             builder.HasKey(i => i.Id);
             builder.Property(i => i.Id).ValueGeneratedOnAdd();
 
             builder.Ignore(i => i.DomainEvents);
 
-            builder.Property<int>("OrderId").IsRequired();
+            //builder.Property<int>("OrderId").IsRequired();
 
             builder.OwnsOne(i => i.Product, p =>
             {
                 p.WithOwner();
+
+                p.Property(pro => pro.UnitPrice).IsRequired(true).HasColumnType("decimal(10, 2)");
             });
 
             // Common Fields

@@ -9,7 +9,7 @@ namespace OrderService.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Card> builder)
         {
-            builder.ToTable("cards", OrderDbContext.DEFAULT_SCHEMA);
+            builder.ToTable("Card", OrderDbContext.DEFAULT_SCHEMA);
 
             builder.Ignore(c => c.DomainEvents);
 

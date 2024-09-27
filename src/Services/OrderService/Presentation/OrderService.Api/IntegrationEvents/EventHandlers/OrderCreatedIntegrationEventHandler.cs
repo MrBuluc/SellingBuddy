@@ -24,7 +24,7 @@ namespace OrderService.Api.IntegrationEvents.EventHandlers
 
                 await mediator.Send(new CreateOrderCommandRequest
                 {
-                    UserName = @event.UserName,
+                    UserName = @event.User.Name,
                     Address = @event.Address,
                     Card = @event.Card,
                     OrderItems = mapper.Map<OrderItemDTO, Item>(@event.Basket.Items)

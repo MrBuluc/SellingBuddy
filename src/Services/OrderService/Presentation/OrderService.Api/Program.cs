@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore;
 using OrderService.Api;
 using OrderService.Api.Extensions;
 using OrderService.Persistence.Context;
@@ -28,6 +27,8 @@ internal class Program
             .Build();
     }
 
+    private static string? contentRootPath;
+
     public static IHost BuildWebHost(IConfiguration configuration) => Host.CreateDefaultBuilder()
         .UseDefaultServiceProvider((context, options) =>
         {
@@ -39,6 +40,11 @@ internal class Program
         {
             webBuilder.UseStartup<Startup>();
             webBuilder.ConfigureLogging(i => i.ClearProviders());
+
+            webBuilder.ConfigureAppConfiguration((context, config) =>
+            {
+                contentRootPath = context.HostingEnvironment.ContentRootPath;
+            });
         })
         .UseSerilog()
         .Build();
@@ -53,7 +59,7 @@ internal class Program
 
         host.MigrateDbContext<OrderDbContext>((context, services) =>
         {
-            (new OrderDbContextSeed()).SeedAsync(context, services.GetService<ILogger<OrderDbContext>>()!).Wait();
+            (new OrderDbContextSeed()).SeedAsync(context, services.GetService<ILogger<OrderDbContext>>()!, contentRootPath!).Wait();
         });
 
         Log.Information("Application is Running...");

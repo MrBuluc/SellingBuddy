@@ -5,6 +5,6 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
     public class Item : BaseEntity
     {
         public Product Product { get; set; }
-        public int Units { get; set; }
+        public int Quantity { get; set; }
     }
 }

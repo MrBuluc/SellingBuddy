@@ -74,7 +74,7 @@ namespace BasketService.Api.Controllers
                 Address = request.Address,
                 Card = request.Card,
                 Buyer = request.Buyer,
-                CustomerBasket = (await mediator.Send(new GetCustomerBasketByIdQueryRequest
+                Basket = (await mediator.Send(new GetCustomerBasketByIdQueryRequest
                 {
                     Id = userId
                 }, cancellationToken)).CustomerBasket

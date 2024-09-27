@@ -1,6 +1,7 @@
 ﻿using EventBus.Base;
 using EventBus.Base.Abstraction;
 using EventBus.Factory;
+using OrderService.Api.Extensions.Registration;
 using OrderService.Api.Extensions.Registration.EventHandlerRegistration;
 using OrderService.Api.Extensions.Registration.ServiceDiscovery;
 using OrderService.Api.IntegrationEvents.EventHandlers;
@@ -64,7 +65,8 @@ namespace OrderService.Api
                 .AddPersistence(configuration)
                 .ConfigureEventHandlers()
                 .AddServiceDiscovery(configuration)
-                .AddCustomMapper();
+                .AddCustomMapper()
+                .ConfigureAuth(configuration);
 
             services.AddSingleton(sp => EventBusFactory.Create(new()
             {
@@ -80,12 +82,10 @@ namespace OrderService.Api
                     Password = "guest"
                 }
             }, sp)!);
-
-            //services.ConfigureAuth(configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime)
         {
             if (env.IsDevelopment())
             {
@@ -109,7 +109,7 @@ namespace OrderService.Api
 
             ConfigureEventBusForSubscription(app);
 
-            //await app.RegisterWithConsul(lifetime, configuration);
+            await app.RegisterWithConsul(lifetime, configuration);
         }
 
         private static void ConfigureEventBusForSubscription(IApplicationBuilder app)

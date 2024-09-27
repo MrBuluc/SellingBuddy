@@ -8,7 +8,6 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
     {
         public DateTime Date { get; private set; }
         public int Quantity { get; private set; }
-        public string Description { get; private set; }
         public Address Address { get; private set; }
         private readonly List<Item> items = [];
         public IReadOnlyCollection<Item> Items => items;
@@ -21,14 +20,14 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
 
         protected Order() => Id = Guid.NewGuid();
 
-        public Order(string userName, Address address, string cardNumber, string cardSecurityNumber, string cardHolderName, DateTime cardExpiration, Guid? buyerId = null) : this()
+        public Order(string userName, Address address, Card card, int submittedStatusId, Guid? buyerId = null) : this()
         {
             BuyerId = buyerId;
-            statusId = Status.Submitted.Id;
+            statusId = submittedStatusId;
             Date = DateTime.UtcNow;
             Address = address;
 
-            AddOrderStartedDomainEvent(userName, cardNumber, cardSecurityNumber, cardHolderName, cardExpiration);
+            AddOrderStartedDomainEvent(userName, card.Number, card.SecurityNumber, card.HolderName, card.Expiration);
         }
 
         private void AddOrderStartedDomainEvent(string userName, string cardNumber, string cardSecurityNumber, string cardHolderName, DateTime cardExpiration)
@@ -48,7 +47,7 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
             items.Add(new()
             {
                 Product = product,
-                Units = units
+                Quantity = units
             });
         }
 

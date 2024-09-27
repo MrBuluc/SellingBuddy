@@ -21,7 +21,7 @@ namespace CatalogService.Persistence.Contexts
             }
         }
 
-        private async Task ProcessSeeding(CatalogServiceDbContext context, string setupDirPath, string picturePath)
+        private static async Task ProcessSeeding(CatalogServiceDbContext context, string setupDirPath, string picturePath)
         {
             string createdBy = "CatalogService.Api";
 
