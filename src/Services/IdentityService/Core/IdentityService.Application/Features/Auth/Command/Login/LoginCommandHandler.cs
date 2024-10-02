@@ -23,6 +23,7 @@ namespace IdentityService.Application.Features.Auth.Command.Login
 
             return new()
             {
+                Id = user.Id,
                 Token = token,
                 Name = user.Name,
                 Email = user.Email!
