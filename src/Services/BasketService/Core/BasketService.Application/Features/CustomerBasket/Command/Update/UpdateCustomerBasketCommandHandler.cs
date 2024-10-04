@@ -2,6 +2,7 @@
 using BasketService.Application.DTOs;
 using BasketService.Application.Interfaces.AutoMapper;
 using BasketService.Application.Interfaces.UnitOfWorks;
+using BasketService.Domain.Entities;
 using MediatR;
 
 namespace BasketService.Application.Features.CustomerBasket.Command.Update
@@ -10,6 +11,8 @@ namespace BasketService.Application.Features.CustomerBasket.Command.Update
     {
         public async Task<UpdateCustomerBasketCommandResponse> Handle(UpdateCustomerBasketCommandRequest request, CancellationToken cancellationToken)
         {
+            mapper.Map<Product, ProductDTO>(new ProductDTO());
+            mapper.Map<BasketItem, BasketItemDTO>(new BasketItemDTO());
             if (!(await unitOfWork.GetWriteRepository<Domain.Entities.CustomerBasket>().UpdateAsync(mapper.Map<Domain.Entities.CustomerBasket, CustomerBasketDTO>(request.CustomerBasket))))
             {
                 throw new Exception("WriteRepository.UpdateAsync() Error");

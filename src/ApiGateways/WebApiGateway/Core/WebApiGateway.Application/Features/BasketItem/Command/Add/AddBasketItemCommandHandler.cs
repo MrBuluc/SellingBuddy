@@ -13,11 +13,11 @@ namespace WebApiGateway.Application.Features.BasketItem.Command.Add
 
         public async Task<Unit> Handle(AddBasketItemCommandRequest request, CancellationToken cancellationToken)
         {
-            CatalogItem item = await catalogService.GetItemAsync(request.CatalogItemId) ?? throw new CatalogItemNotFoundException();
+            CatalogItem item = await catalogService.GetItemAsync(request.ProductId) ?? throw new CatalogItemNotFoundException();
 
-            Models.Basket.BasketData currentBasket = await basketService.GetById(request.BasketId) ?? throw new BasketNotFoundException();
+            Models.Basket.BasketData currentBasket = await basketService.GetMyBasket();
 
-            Models.Basket.BasketItem? basketItem = currentBasket.Items.SingleOrDefault(i => i.Item.Id == item.Id);
+            Models.Basket.BasketItem? basketItem = currentBasket.Items.SingleOrDefault(i => i.Product.Id == item.Id);
 
             if (basketItem is not null)
             {
@@ -27,13 +27,13 @@ namespace WebApiGateway.Application.Features.BasketItem.Command.Add
             {
                 currentBasket.Items.Add(new()
                 {
-                    Item = item,
+                    Product = item,
                     Quantity = request.Quantity,
                     Id = Guid.NewGuid().ToString()
                 });
             }
 
-            await basketService.UpdateAsync(currentBasket);
+            Models.Basket.BasketData? basketData = await basketService.UpdateAsync(currentBasket);
 
             return Unit.Value;
         }

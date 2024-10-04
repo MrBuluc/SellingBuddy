@@ -11,10 +11,18 @@ namespace BasketService.Application.Features.CustomerBasket.Command.AddItem
     {
         public async Task<Unit> Handle(AddItemCustomerBasketCommandRequest request, CancellationToken cancellationToken)
         {
-            Domain.Entities.CustomerBasket customerBasket = await unitOfWork.GetReadRepository<Domain.Entities.CustomerBasket>().GetAsync(request.UserId.ToString()) ?? new Domain.Entities.CustomerBasket() { BuyerId = request.UserId.ToString() };
+            Domain.Entities.CustomerBasket customerBasket = await unitOfWork.GetReadRepository<Domain.Entities.CustomerBasket>().GetAsync(request.Id.ToString()) ?? new Domain.Entities.CustomerBasket() { BuyerId = request.Id.ToString() };
 
-            mapper.Map<Product, ProductDTO>(new ProductDTO());
-            customerBasket.Items.Add(mapper.Map<BasketItem, BasketItemDTO>(request.Item));
+            
+            customerBasket.Items.Add(new()
+            {
+                Id = request.Id,
+                Product = new()
+                {
+                    Id = request.ProductId
+                },
+                Quantity = request.Quantity,
+            });
             await unitOfWork.GetWriteRepository<Domain.Entities.CustomerBasket>().UpdateAsync(customerBasket);
 
             return Unit.Value;

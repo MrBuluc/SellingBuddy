@@ -7,7 +7,7 @@ namespace BasketService.Application.Features.CustomerBasket.Command.AddItem
     {
         public AddItemCustomerBasketCommandValidator()
         {
-            RuleFor(x => x.Item).SetValidator(new BasketItemDTOValidator());
+            //RuleFor(x => x.Item).SetValidator(new BasketItemDTOValidator());
         }
     }
 }

@@ -162,9 +162,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketService.Api", "src\Services\BasketService\Presentation\BasketService.Api\BasketService.Api.csproj", "{E9534473-74B2-4160-8F0C-3B5CAF54E83A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Mapper", "src\Services\OrderService\Core\OrderService.Mapper\OrderService.Mapper.csproj", "{62A50955-8BF3-4277-AFFA-E4CD730AF8E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Mapper", "src\Services\OrderService\Core\OrderService.Mapper\OrderService.Mapper.csproj", "{62A50955-8BF3-4277-AFFA-E4CD730AF8E2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderService.Persistence", "src\Services\OrderService\Infrastructure\OrderService.Persistence\OrderService.Persistence.csproj", "{E5F0A5DE-700E-4202-A362-98E13BF6A910}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderService.Persistence", "src\Services\OrderService\Infrastructure\OrderService.Persistence\OrderService.Persistence.csproj", "{E5F0A5DE-700E-4202-A362-98E13BF6A910}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

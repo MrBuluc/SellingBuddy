@@ -5,7 +5,8 @@ namespace BasketService.Application.Features.CustomerBasket.Command.AddItem
 {
     public class AddItemCustomerBasketCommandRequest : IRequest<Unit>
     {
-        public BasketItemDTO Item { get; set; }
-        public Guid UserId { get; set; }
+        public Guid Id { get; set; }
+        public int ProductId { get; set; }
+        public int Quantity { get; set; }
     }
 }

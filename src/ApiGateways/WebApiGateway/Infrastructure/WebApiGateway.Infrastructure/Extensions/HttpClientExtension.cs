@@ -6,7 +6,7 @@ namespace WebApiGateway.Infrastructure.Extensions
     {
         public async static Task<TResult?> PostGetResponseAsync<TResult, TValue>(this HttpClient client, string url, TValue value)
         {
-            HttpResponseMessage httpResponseMessage = await client.PatchAsJsonAsync(url, value);
+            HttpResponseMessage httpResponseMessage = await client.PostAsJsonAsync(url, value);
 
             return httpResponseMessage.IsSuccessStatusCode ? await httpResponseMessage.Content.ReadFromJsonAsync<TResult>() : default;
         }

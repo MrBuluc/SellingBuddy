@@ -12,7 +12,7 @@ namespace Web.ApiGateway.Controllers
         private readonly IMediator mediator = mediator;
 
         [HttpPost]
-        [Route("items")]
+        [Route("item")]
         [ProducesResponseType((int)HttpStatusCode.BadRequest)]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         public async Task<ActionResult> AddBasketItemAsync([FromBody] AddBasketItemCommandRequest request, CancellationToken cancellationToken)

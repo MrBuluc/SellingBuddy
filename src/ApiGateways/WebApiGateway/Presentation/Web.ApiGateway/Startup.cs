@@ -54,21 +54,19 @@ namespace Web.ApiGateway
         private void ConfigureHttpClient(IServiceCollection services)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            //services.AddTransient<HttpClientDelegatingHandler>();
+            services.AddTransient<HttpClientDelegatingHandler>();
 
             services.AddHttpClient("basket", c =>
             {
                 c.BaseAddress = new(Configuration["urls:basket"]);
             })
-                //.AddHttpMessageHandler<HttpClientDelegatingHandler>()
-                ;
+                .AddHttpMessageHandler<HttpClientDelegatingHandler>();
 
             services.AddHttpClient("catalog", c =>
             {
                 c.BaseAddress = new(Configuration["urls:catalog"]);
             })
-                //.AddHttpMessageHandler<HttpClientDelegatingHandler>()
-                ;
+                .AddHttpMessageHandler<HttpClientDelegatingHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

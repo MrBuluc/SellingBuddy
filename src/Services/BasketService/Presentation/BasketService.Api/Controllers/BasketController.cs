@@ -35,22 +35,30 @@ namespace BasketService.Api.Controllers
         }, cancellationToken))
             .CustomerBasket);
 
+        [HttpGet("mybasket")]
+        [ProducesResponseType(typeof(CustomerBasketDTO), (int)HttpStatusCode.OK)]
+        public async Task<ActionResult<CustomerBasketDTO>> GetMyBasketAsync(CancellationToken cancellationToken) => Ok((await mediator.Send(new GetCustomerBasketByIdQueryRequest
+        {
+            Id = User.FindFirst(ClaimTypes.NameIdentifier)!.Value
+        }, cancellationToken))
+            .CustomerBasket);
+
         [HttpPost]
         [Route("update")]
         [ProducesResponseType(typeof(CustomerBasketDTO), (int)HttpStatusCode.OK)]
-        public async Task<ActionResult<CustomerBasketDTO>> UpdateBasketAsync([FromBody] UpdateCustomerBasketCommandRequest request, CancellationToken cancellationToken) => Ok((await mediator.Send(request, cancellationToken))
+        public async Task<ActionResult<CustomerBasketDTO>> UpdateBasketAsync([FromBody] CustomerBasketDTO customerBasketDTO, CancellationToken cancellationToken) => Ok((await mediator.Send(new UpdateCustomerBasketCommandRequest
+        {
+            CustomerBasket = customerBasketDTO
+        }, cancellationToken))
             .CustomerBasket);
 
         [Route("additem")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
         [HttpPost]
-        public async Task<ActionResult> AddItemToBasket([FromBody] BasketItemDTO basketItem, CancellationToken cancellationToken)
+        public async Task<ActionResult> AddItemToBasketAsync([FromBody] AddItemCustomerBasketCommandRequest request, CancellationToken cancellationToken)
         {
-            await mediator.Send(new AddItemCustomerBasketCommandRequest
-            {
-                Item = basketItem,
-                UserId = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value)
-            }, cancellationToken);
+            request.Id = Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            await mediator.Send(request, cancellationToken);
 
             return Ok();
         }
