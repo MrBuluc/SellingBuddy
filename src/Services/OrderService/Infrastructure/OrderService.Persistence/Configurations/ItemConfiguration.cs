@@ -22,7 +22,7 @@ namespace OrderService.Persistence.Configurations
             {
                 p.WithOwner();
 
-                p.Property(pro => pro.UnitPrice).IsRequired(true).HasColumnType("decimal(10, 2)");
+                p.Property(pro => pro.Price).IsRequired(true).HasColumnType("decimal(10, 2)");
             });
 
             // Common Fields

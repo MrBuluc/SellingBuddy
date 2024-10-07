@@ -23,7 +23,7 @@ namespace OrderService.Application.Features.Order.Commands.Create
 
             foreach (OrderItemDTO orderItem in request.OrderItems)
             {
-                dbOrder.AddOrderItem(mapper.Map<Product, ProductDTO>(orderItem.Product), orderItem.Units);
+                dbOrder.AddOrderItem(mapper.Map<Product, ProductDTO>(orderItem.Product), orderItem.Quantity);
             }
 
             await unitOfWork.GetWriteRepository<Domain.AggregateModels.OrderAggregate.Order>().AddAsync(dbOrder);

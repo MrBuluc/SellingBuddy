@@ -18,7 +18,7 @@ namespace OrderService.Application.Features.Order.Queries.GetById
 
             Domain.AggregateModels.OrderAggregate.Order order = await unitOfWork.GetOrderReadRepository().GetByIdAsync(request.OrderId, o => o.Items, o => o.Status) ?? throw new OrderNotFoundException();
             GetOrderByIdQueryResponse getOrderByIdQueryResponse = mapper.Map<GetOrderByIdQueryResponse, Domain.AggregateModels.OrderAggregate.Order>(order);
-            getOrderByIdQueryResponse.Total = order.Items.Sum(i => i.Quantity * i.Product.UnitPrice);
+            getOrderByIdQueryResponse.Total = order.Items.Sum(i => i.Quantity * i.Product.Price);
             getOrderByIdQueryResponse.Status = order.Status.Name;
 
             return getOrderByIdQueryResponse;

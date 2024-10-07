@@ -49,6 +49,8 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
                 Product = product,
                 Quantity = units
             });
+
+            Quantity += units;
         }
 
     }

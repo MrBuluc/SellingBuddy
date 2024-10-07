@@ -1,5 +1,4 @@
-﻿using BasketService.Application.DTOs;
-using MediatR;
+﻿using MediatR;
 
 namespace BasketService.Application.Features.CustomerBasket.Command.AddItem
 {

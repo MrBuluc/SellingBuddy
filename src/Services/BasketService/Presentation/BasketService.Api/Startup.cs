@@ -120,7 +120,7 @@ namespace BasketService.Api
             app.ConfigureExceptionHandlingMiddleware();
         }
 
-        private void ConfigureSubscription(IServiceProvider serviceProvider)
+        private static void ConfigureSubscription(IServiceProvider serviceProvider)
         {
             serviceProvider.GetRequiredService<IEventBus>().Subscribe<OrderCreatedIntegrationEvent, OrderCreatedIntegrationEventHandler>();
         }

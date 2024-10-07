@@ -1,8 +1,6 @@
 ﻿using BasketService.Application.Bases;
-using BasketService.Application.DTOs;
 using BasketService.Application.Interfaces.AutoMapper;
 using BasketService.Application.Interfaces.UnitOfWorks;
-using BasketService.Domain.Entities;
 using MediatR;
 
 namespace BasketService.Application.Features.CustomerBasket.Command.AddItem
