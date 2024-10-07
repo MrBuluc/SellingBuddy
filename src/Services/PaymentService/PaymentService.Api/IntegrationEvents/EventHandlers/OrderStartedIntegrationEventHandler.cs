@@ -11,11 +11,11 @@ namespace PaymentService.Api.IntegrationEvents.EventHandlers
 
         public Task Handle(OrderStartedIntegrationEvent @event)
         {
-            bool isPaymentSuccess = CardService.IsValidCardNumber(@event.Card);
+            ValidCardNumberResult isPaymentSuccess = CardService.IsValidCardNumber(@event.Card);
 
             logger.LogInformation($"OrderStartedIntegrationEventHandler in PaymentService is fired with PaymentSuccess: {isPaymentSuccess}, orderId: {@event.OrderId}");
 
-            eventBus.Publish(isPaymentSuccess ? new OrderPaymentSuccessIntegrationEvent(@event.OrderId, @event.CustomerName, @event.CustomerEmail) : new OrderPaymentFailedIntegrationEvent(@event.OrderId, "Card number is invalid", @event.CustomerName, @event.CustomerEmail));
+            eventBus.Publish(isPaymentSuccess.IsValid ? new OrderPaymentSuccessIntegrationEvent(@event.OrderId, @event.CustomerName, @event.CustomerEmail) : new OrderPaymentFailedIntegrationEvent(@event.OrderId, isPaymentSuccess.ErrorMessage!, @event.CustomerName, @event.CustomerEmail));
 
             return Task.CompletedTask;
         }

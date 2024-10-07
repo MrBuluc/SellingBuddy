@@ -17,15 +17,23 @@ namespace PaymentService.Api.Services
         [GeneratedRegex(@"^6(?:011|5[0-9]{2})[0-9]{12}$")]
         private static partial Regex Discover();
 
-        public static bool IsValidCardNumber(CardDTO card)
+        public static ValidCardNumberResult IsValidCardNumber(CardDTO card)
         {
-            if (card.Expiration < DateTime.Now) return false;
+            if (card.Expiration < DateTime.Now) return new()
+            {
+                IsValid = false,
+                ErrorMessage = "Card Expiration Date expired."
+            };
 
             CardType? cardType = GetCardType(card.Number);
 
-            if (cardType is null) return false;
+            if (cardType is null) return new()
+            {
+                IsValid = false,
+                ErrorMessage = "Card Type is not supported. Supported Card Types: MasterCard, Visa, Discover and AmericanExpress."
+            };
 
-            int validDigits;
+            int validDigits = 0;
             switch (cardType)
             {
                 case CardType.MasterCard:
@@ -36,9 +44,12 @@ namespace PaymentService.Api.Services
                 case CardType.AmericanExpress:
                     validDigits = 4;
                     break;
-                default: return false;
             }
-            return card.SecurityNumber.Length == validDigits && new Regex($"[0-9]{{{validDigits}}}").Match(card.SecurityNumber).Success;
+            return new()
+            {
+                IsValid = card.SecurityNumber.Length == validDigits && new Regex($"[0-9]{{{validDigits}}}").Match(card.SecurityNumber).Success,
+                ErrorMessage = "Card Security Number not valid for type."
+            };
         }
 
         private static CardType? GetCardType(string cardNumber)
@@ -70,5 +81,13 @@ namespace PaymentService.Api.Services
         MasterCard,
         AmericanExpress,
         Discover
+    }
+
+    public class ValidCardNumberResult
+    {
+        public bool IsValid { get; set; }
+        public string? ErrorMessage { get; set; }
+
+        public override string ToString() => $"IsValid: {IsValid}, ErrorMessage: {ErrorMessage}";
     }
 }
