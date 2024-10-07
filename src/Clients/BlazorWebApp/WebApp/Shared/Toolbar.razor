@@ -1,0 +1,87 @@
+﻿@if (isLoggedIn)
+{
+    <a href="basket" class="ml-md-auto">@identityService.GetUserName() - Basket (@basketItemCount)</a>
+    <a class="ml-md-auto" @onclick=@GoLogoutPage>Logout</a>
+}
+else
+{
+    <a class="ml-md-auto" @onclick=@GoLoginPage>Login</a>
+}
+
+@code {
+    bool isLoggedIn = false;
+    private int basketItemCount = 0;
+
+    [Inject]
+    IIdentityService identityService { get; set; }
+
+    [Inject]
+    IBasketService basketService { get; set; }
+
+    [Inject]
+    AppStateManager appState { get; set; }
+
+    [Inject]
+    NavigationManager navigationManager { get; set; }
+
+    private void GoLogoutPage()
+    {
+        navigationManager.NavigateTo($"logout?returnUrl={Uri.EscapeDataString(navigationManager.Uri)}", false);
+    }
+
+    private void GoLoginPage()
+    {
+        navigationManager.NavigateTo($"login?returnUrl={Uri.EscapeDataString(navigationManager.Uri)}", false);
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            appState.StateChanged += async (source, property) => await AppState_StateChanged(source, property);
+        }
+    }
+
+    private async Task AppState_StateChanged(ComponentBase source, string property)
+    {
+        if (source == this)
+        {
+            return;
+        }
+
+        if (property == "increase")
+        {
+            basketItemCount++;
+        }
+        else if (property == "updatebasket")
+        {
+            await CalculateItemCount();
+        }
+        else if (property == "login")
+        {
+            await CalculateItemCount();
+        }
+
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task<int> CalculateItemCount()
+    {
+        isLoggedIn = identityService.IsLoggedIn;
+
+        if (!isLoggedIn)
+            return 0;
+
+        Basket? basket = await basketService.GetBasketAsync();
+        int count = basket is null ? 0 : basket.Items.Sum(i => i.Quantity);
+
+        basketItemCount = count;
+
+        return count;
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CalculateItemCount();
+    }
+}

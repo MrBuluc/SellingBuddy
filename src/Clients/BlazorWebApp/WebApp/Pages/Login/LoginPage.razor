@@ -1,0 +1,67 @@
+﻿@page "/login"
+
+@using System.Web;
+
+<div class="container-fluid h-100">
+    <div class="row justify-content-center align-items-center h-100">
+        <div class="col col-sm-6 col-md-6 col-lg-4 col-xl-3">
+            <EditForm Model="@userLoginRequest" OnValidSubmit="LoginProcess">
+                <DataAnnotationsValidator />
+
+                <div class="form-group">
+                    <input @bind-value="userLoginRequest.Email" class="form-control form-control-lg" type="text" placeholder="Email" />
+                    <ValidationMessage For="@(() => userLoginRequest.Email)" />
+                </div>
+
+                <div class="form-group">
+                    <input @bind-value="userLoginRequest.Password" class="form-control form-control-lg" type="password" placeholder="Password" />
+                    <ValidationMessage For="@(() => userLoginRequest.Password)" />
+                </div>
+
+                @if (message is not null)
+                {
+                    <p>@message</p>
+                }
+                <div class="form-group">
+                    @* <button class="btn btn-info btn-block">Login</button>*@
+                    <Button Color="ButtonColor.Primary" Loading="@loading" Type="ButtonType.Submit">Login</Button>
+                </div>
+            </EditForm>
+        </div>
+    </div>
+</div>
+
+@code {
+    public UserLoginRequest userLoginRequest = new();
+
+    [Inject]
+    IIdentityService identityService { get; set; }
+
+    [Inject]
+    NavigationManager navigationManager { get; set; }
+
+    string? message;
+
+    bool loading = false;
+
+    private async Task LoginProcess()
+    {
+        loading = true;
+
+        try
+        {
+            if (await identityService.Login(userLoginRequest.Email, userLoginRequest.Password))
+            {
+                navigationManager.NavigateTo(HttpUtility.ParseQueryString(
+                    new Uri(navigationManager.Uri)
+                    .Query).Get("returnUrl") ?? "/");
+            }
+        }
+        catch (ExceptionModel e)
+        {
+            message = e.Errors.ElementAt(0);
+        }
+
+        loading = false;
+    }
+}

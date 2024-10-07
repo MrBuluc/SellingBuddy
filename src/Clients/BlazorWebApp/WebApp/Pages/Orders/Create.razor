@@ -1,0 +1,141 @@
+﻿@page "/create-order"
+@using System.ComponentModel.DataAnnotations
+
+<h3>Order Create</h3>
+
+<EditForm Model="@order" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+
+    <section class="esh-orders_new-section">
+        <h4 class="esh-orders_new-title">Shipping Address</h4>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Street</label>
+                    <InputText @bind-Value="order.Street" class="form-control" />
+                    <ValidationMessage For="@(() => order.Street)" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>City</label>
+                    <InputText @bind-Value="order.City" class="form-control" />
+                    <ValidationMessage For="@(() => order.City)" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>State</label>
+                    <InputText @bind-Value="order.State" class="form-control" />
+                    <ValidationMessage For="@(() => order.State)" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Country</label>
+                    <InputText @bind-Value="order.Country" class="form-control" />
+                    <ValidationMessage For="@(() => order.Country)" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Zip Code</label>
+                    <InputText @bind-Value="order.ZipCode" class="form-control" />
+                    <ValidationMessage For="@(() => order.ZipCode)" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="esh-orders_new-section">
+        <h4 class="esh-orders_new-title">Payment Information</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <InputText @bind-Value="order.Number" class="form-control" />
+                    <ValidationMessage For="@(() => order.Number)" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Card Holder Name</label>
+                    <InputText @bind-Value="order.HolderName" class="form-control" />
+                    <ValidationMessage For="@(() => order.HolderName)" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Card Expiration Date (MM/YY)</label>
+                    <InputText @bind-Value="order.ExpirationShort" class="form-control" />
+                    <ValidationMessage For="@(() => order.ExpirationShort)" />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Card Security Number</label>
+                    <InputText @bind-Value="order.SecurityNumber" class="form-control" />
+                    <ValidationMessage For="@(() => order.SecurityNumber)" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="row" style="margin: 50px">
+        <Button Color="ButtonColor.Primary" Loading="@loading" Type="ButtonType.Submit">Make Payment</Button>
+    </div>
+</EditForm>
+
+@code {
+    Order order = new()
+        {
+            Street = "Gürpınar Mahallesi",
+            City = "Beylikdüzü",
+            State = "İstanbul",
+            Country = "Türkiye",
+            ZipCode = "34528",
+            Number = "371449635398431",
+            HolderName = "Hakkıcan Bülüç",
+            ExpirationShort = "11/24",
+            SecurityNumber = "1000"
+        };
+
+    [Inject]
+    IBasketService basketService { get; set; }
+
+    [Inject]
+    IIdentityService identityService { get; set; }
+
+    [Inject]
+    IOrderService orderService { get; set; }
+
+    [Inject]
+    NavigationManager navigationManager { get; set; }
+
+    [Inject]
+    AppStateManager appState { get; set; }
+
+    bool loading = false;
+
+    async Task OnValidSubmit()
+    {
+        loading = true;
+
+        if (!identityService.IsLoggedIn)
+        {
+            navigationManager.NavigateTo($"login?returnUrl={Uri.EscapeDataString(navigationManager.Uri)}", true);
+            return;
+        }
+
+        order.Buyer = identityService.GetUserName()!;
+
+        await basketService.CheckoutAsync(orderService.MapOrderToBasket(order));
+
+        appState.UpdateCart(this);
+
+        navigationManager.NavigateTo("/");
+
+        loading = false;
+    }
+}

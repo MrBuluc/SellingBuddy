@@ -1,6 +1,6 @@
 {
   "profiles": {
-    "http": {
+    "WebApp": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

@@ -1,0 +1,116 @@
+﻿@page "/basket"
+@using System.Globalization
+
+<div class="card">
+    <div class="row">
+        <div class="col-md-8 cart">
+            <div class="title">
+                <div class="row">
+                    <div class="col">
+                        <h4><b>Shopping Cart</b></h4>
+                    </div>
+                    <div class="col align-self-center text-right text-muted">@basket.Items.Count items</div>
+                </div>
+            </div>
+
+            @if (basket.Items.Any())
+            {
+                foreach (Item item in basket.Items)
+                {
+                    <div class="row border-top border-bottom">
+                        <div class="row main align-items-center">
+                            <div class="col-2">
+                                <img class="img-fluid"
+                                     src="@($"http://localhost:5182/api/Picture/api/v1/items/{item.Product.Id}/pic")" />
+                            </div>
+                            <div class="col">
+                                <div class="row text-muted">@item.Product.Name</div>
+                            </div>
+                            <div class="col">
+                                <a href="#" class="border">@item.Quantity</a>
+                            </div>
+                            <div class="col">
+                                ₺@item.Product.Price.ToString("N2")
+                                <span @onclick="@(async() => await RemoveItemFromList(item))">
+                                    <button type="button" class="close" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+
+            <div class="back-to-shop">
+                <a href="catalog">&leftarrow;</a>
+                <span class="text-muted">Back To Shop</span>
+            </div>
+        </div>
+
+        <div class="col-md-4 summary">
+            <div>
+                <h5><b>Summary</b></h5>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col" style="padding-left: 0;">
+                    ITEMS @basket.Items.Count
+                </div>
+                <div class="col text-right">
+                    ₺@basket.Items.Sum(i => i.Product.Price * i.Quantity).ToString("N2")
+                </div>
+            </div>
+
+            <div class="row" style="border-top: 1px solid rgba(0, 0, 0, .1); padding: 2vh 0;">
+                <div class="col">
+                    TOTAL PRICE
+                </div>
+                <div>
+                    <button class="btn" @onclick="@(() => Checkout())">CHECKOUT</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    WebApp.Domain.Models.ViewModels.Basket? basket = new();
+
+    [Inject]
+    IBasketService basketService { get; set; }
+
+    [Inject]
+    AppStateManager appState { get; set; }
+
+    [Inject]
+    NavigationManager navigationManager { get; set; }
+
+    string? message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        basket = await basketService.GetBasketAsync();
+    }
+
+    async Task RemoveItemFromList(Item item)
+    {
+        try
+        {
+            basket!.Items.Remove(item);
+            basket = await basketService.UpdateBasketAsync(basket);
+
+            appState.UpdateCart(null);
+        }
+        catch (ExceptionModel e)
+        {
+            // Todo
+            message = string.Join(", ", e.Errors);
+        }
+    }
+
+    void Checkout()
+    {
+        navigationManager.NavigateTo("/create-order");
+    }
+}
