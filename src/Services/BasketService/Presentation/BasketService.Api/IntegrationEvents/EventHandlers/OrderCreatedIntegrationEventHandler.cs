@@ -16,7 +16,7 @@ namespace BasketService.Api.IntegrationEvents.EventHandlers
 
             await mediator.Send(new DeleteCustomerBasketCommandRequest
             {
-                BuyerId = @event.Buyer
+                BuyerId = @event.User.Id
             });
         }
     }
