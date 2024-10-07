@@ -8,6 +8,7 @@ namespace OrderService.Application.Features.Order.Commands.Create
         public string UserName { get; set; }
         public AddressDTO Address { get; set; }
         public CardDTO Card { get; set; }
+        public string CustomerEmail { get; set; }
 
         public IEnumerable<OrderItemDTO> OrderItems { get; set; } = [];
     }

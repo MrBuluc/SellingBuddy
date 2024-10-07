@@ -33,8 +33,10 @@ namespace OrderService.Application.Features.Order.Commands.Create
 
             eventBus.Publish(new OrderStartedIntegrationEvent
             {
-                UserName = request.UserName,
-                OrderId = dbOrder.Id
+                CustomerName = request.UserName,
+                OrderId = dbOrder.Id,
+                Card = request.Card,
+                CustomerEmail = request.CustomerEmail
             });
 
             logger.LogInformation("CreateOrderCommandHandler -> OrderStartedIntegrationEvent fired");

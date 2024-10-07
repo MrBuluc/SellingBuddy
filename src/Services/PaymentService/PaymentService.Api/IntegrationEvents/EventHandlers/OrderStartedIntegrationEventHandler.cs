@@ -11,7 +11,7 @@ namespace PaymentService.Api.IntegrationEvents.EventHandlers
 
         public Task Handle(OrderStartedIntegrationEvent @event)
         {
-            bool isPaymentSuccess = CardService.IsValidCardNumber(@event.CardNumber);
+            bool isPaymentSuccess = CardService.IsValidCardNumber(@event.Card);
 
             logger.LogInformation($"OrderStartedIntegrationEventHandler in PaymentService is fired with PaymentSuccess: {isPaymentSuccess}, orderId: {@event.OrderId}");
 

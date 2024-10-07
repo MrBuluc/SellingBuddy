@@ -76,7 +76,8 @@ namespace BasketService.Api.Controllers
                 User = new()
                 {
                     Id = userId,
-                    Name = User.FindFirst(JwtRegisteredClaimNames.Name)!.Value
+                    Name = User.FindFirst(JwtRegisteredClaimNames.Name)!.Value,
+                    Email = User.FindFirst(JwtRegisteredClaimNames.Email)!.Value
                 },
                 OrderNumber = Guid.NewGuid(),
                 Address = request.Address,

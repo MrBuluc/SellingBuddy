@@ -27,7 +27,8 @@ namespace OrderService.Api.IntegrationEvents.EventHandlers
                     UserName = @event.User.Name,
                     Address = @event.Address,
                     Card = @event.Card,
-                    OrderItems = mapper.Map<OrderItemDTO, Item>(@event.Basket.Items)
+                    OrderItems = mapper.Map<OrderItemDTO, Item>(@event.Basket.Items),
+                    CustomerEmail = @event.User.Email
                 });
             } catch (Exception ex)
             {
