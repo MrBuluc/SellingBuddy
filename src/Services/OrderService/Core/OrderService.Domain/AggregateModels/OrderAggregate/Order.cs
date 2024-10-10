@@ -20,14 +20,13 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
 
         protected Order() => Id = Guid.NewGuid();
 
-        public Order(string userName, Address address, Card card, int submittedStatusId, Guid? buyerId = null) : this()
+        public Order(string userName, Address address, string cardNumber, string cardSecurityNumber, string cardHolderName, DateTime cardExpiration, int submittedStatusId) : this()
         {
-            BuyerId = buyerId;
             statusId = submittedStatusId;
             Date = DateTime.UtcNow;
             Address = address;
 
-            AddOrderStartedDomainEvent(userName, card.Number, card.SecurityNumber, card.HolderName, card.Expiration);
+            AddOrderStartedDomainEvent(userName, cardNumber, cardSecurityNumber, cardHolderName, cardExpiration);
         }
 
         private void AddOrderStartedDomainEvent(string userName, string cardNumber, string cardSecurityNumber, string cardHolderName, DateTime cardExpiration)
@@ -35,7 +34,10 @@ namespace OrderService.Domain.AggregateModels.OrderAggregate
             AddDomainEvent(new OrderStartedDomainEvent
             {
                 UserName = userName,
-                Card = new(cardNumber, cardSecurityNumber, cardHolderName, cardExpiration),
+                CardNumber = cardNumber,
+                CardSecurityNumber = cardSecurityNumber,
+                CardHolderName = cardHolderName,
+                CardExpiration = cardExpiration,
                 Order = this
             });
         }

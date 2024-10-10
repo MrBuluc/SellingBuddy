@@ -88,18 +88,7 @@
 </EditForm>
 
 @code {
-    Order order = new()
-        {
-            Street = "Gürpınar Mahallesi",
-            City = "Beylikdüzü",
-            State = "İstanbul",
-            Country = "Türkiye",
-            ZipCode = "34528",
-            Number = "371449635398431",
-            HolderName = "Hakkıcan Bülüç",
-            ExpirationShort = "11/24",
-            SecurityNumber = "1000"
-        };
+    Order order = new();
 
     [Inject]
     IBasketService basketService { get; set; }

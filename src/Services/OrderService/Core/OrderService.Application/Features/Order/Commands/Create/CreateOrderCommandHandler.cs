@@ -19,7 +19,14 @@ namespace OrderService.Application.Features.Order.Commands.Create
         {
             logger.LogInformation("CreateOrderCommandHandler -> Handle method invoked");
 
-            Domain.AggregateModels.OrderAggregate.Order dbOrder = new(request.UserName, mapper.Map<Address, AddressDTO>(request.Address), new Domain.Entities.Card(request.Card.Number, request.Card.SecurityNumber, request.Card.HolderName, request.Card.Expiration), (await unitOfWork.GetReadRepository<Status>().GetSingleAsync(s => s.Name == "Submitted"))!.Id);
+            Domain.AggregateModels.OrderAggregate.Order dbOrder = new(
+                request.UserName,
+                mapper.Map<Address, AddressDTO>(request.Address),
+                    request.Card.Number,
+                    request.Card.SecurityNumber,
+                    request.Card.HolderName,
+                    request.Card.Expiration,
+                (await unitOfWork.GetReadRepository<Status>().GetSingleAsync(s => s.Name == "Submitted"))!.Id);
 
             foreach (OrderItemDTO orderItem in request.OrderItems)
             {

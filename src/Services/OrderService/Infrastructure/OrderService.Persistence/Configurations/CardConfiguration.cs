@@ -14,9 +14,11 @@ namespace OrderService.Persistence.Configurations
             builder.Ignore(c => c.DomainEvents);
 
             builder.HasKey(c => c.Id);
-            builder.Property(c => c.Id).HasColumnName("id").ValueGeneratedOnAdd();
+            builder.Property(c => c.Id).ValueGeneratedOnAdd();
 
-            builder.Property<int>("BuyerId").IsRequired();
+            builder.HasOne(c => c.Buyer)
+                .WithMany(b => b.Cards)
+                .HasForeignKey(c => c.BuyerId);
 
             builder.Property(c => c.HolderName)
                 .UsePropertyAccessMode(PropertyAccessMode.Field)

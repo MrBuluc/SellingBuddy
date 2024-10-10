@@ -12,18 +12,10 @@ namespace OrderService.Persistence.Configurations
             builder.ToTable("Buyer", OrderDbContext.DEFAULT_SCHEMA);
 
             builder.HasKey(b => b.Id);
-            builder.Property(b => b.Id).ValueGeneratedOnAdd();
 
             builder.Ignore(b => b.DomainEvents);
 
             builder.Property(b => b.Name).HasColumnType("name").HasColumnType("varchar").HasMaxLength(100);
-
-            builder.HasMany(b => b.Cards)
-                .WithOne()
-                .HasForeignKey(c => c.Id)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            builder.Metadata.FindNavigation(nameof(Buyer.Cards))?.SetPropertyAccessMode(PropertyAccessMode.Field);
 
             // Common Fields
             builder.Property(x => x.CreatedDate).IsRequired();
