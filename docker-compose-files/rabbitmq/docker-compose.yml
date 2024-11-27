@@ -1,5 +1,3 @@
-version: '3.4'
-
 services: 
   s_rabbitmq:
     container_name: c_rabbitmq

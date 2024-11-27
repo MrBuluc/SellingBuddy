@@ -3,7 +3,6 @@ using CatalogService.Application.Settings;
 using CatalogService.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using System.Text;
 
 namespace CatalogService.Infrastructure
 {

@@ -76,7 +76,7 @@ namespace OrderService.Api
                 EventNameSuffix = "IntegrationEvent",
                 Connection = new ConnectionFactory()
                 {
-                    HostName = "207.154.222.131",
+                    HostName = "localhost",
                     Port = 5672,
                     UserName = "guest",
                     Password = "guest"
